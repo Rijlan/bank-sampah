@@ -24,3 +24,8 @@ Route::get('user', 'ApiUserController@getAuthenticatedUser')->middleware('jwt.ve
 
 // Nasabah
 Route::get('nasabah', 'ApiNasabahController@index')->middleware('jwt.verify');
+Route::get('riwayatuang', 'ApiNasabahController@riwayatUang')->middleware('jwt.verify');
+Route::get('riwayatbarang', 'ApiNasabahController@riwayatBarang')->middleware('jwt.verify');
+Route::get('riwayatpenjemputan', 'ApiNasabahController@riwayatPenjemputan')->middleware('jwt.verify');
+Route::get('penjemputan', 'ApiNasabahController@penjemputan')->middleware('jwt.verify');
+Route::post('penjemputan', 'ApiNasabahController@requestPenjemputan')->middleware('jwt.verify');
