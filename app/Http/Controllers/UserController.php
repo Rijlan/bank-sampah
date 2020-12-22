@@ -15,11 +15,23 @@ class UserController extends Controller
     }
     
     public function index() {
-        $users = User::where('role', '!=', 3)->where('role', '!=', 5)->get();
+        $users = User::where('role', '!=', 3)->where('role', '!=', 5)->orderBy('role', 'DESC')->get();
         
         return view('user.index' , [
             'page' => $this->page,
             'users' => $users
         ]);
+    }
+    
+    public function destroy($id) {
+        $user = User::findOrFail($id);
+
+        try {
+            $user->delete();
+        } catch (\Throwable $th) {
+            return redirect(route('user.index'));
+        }
+
+        return redirect(route('user.index'));
     }
 }
