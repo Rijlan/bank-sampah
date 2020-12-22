@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class JenisSampah extends Model
 {
-    //
+    protected $fillable = ['jenis', 'harga_nasabah', 'harga_pengepul'];
+
+
+    public function catatan()
+    {
+        return $this->hasMany(Catatan::class);
+    }
 }

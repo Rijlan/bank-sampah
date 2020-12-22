@@ -18,6 +18,7 @@ class CreateChatsTable extends Migration
             $table->unsignedBigInteger('from');
             $table->unsignedBigInteger('to');
             $table->text('pesan');
+            $table->integer('status');
             $table->timestamps();
         });
     }
