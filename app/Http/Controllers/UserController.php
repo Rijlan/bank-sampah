@@ -15,7 +15,7 @@ class UserController extends Controller
     }
     
     public function index() {
-        $users = User::where('role', '!=', 3)->get();
+        $users = User::where('role', '!=', 3)->where('role', '!=', 5)->get();
         
         return view('user.index' , [
             'page' => $this->page,

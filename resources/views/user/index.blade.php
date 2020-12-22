@@ -78,7 +78,22 @@
                                         <h1>{{ ucwords($user->name) }}</h1>
                                         <p class="text-muted">{{ $user->email }}</p>
                                     </div>
+                                    <div class="row justify-content-center">
+                                        <div class="container">
+                                            <div class="col-md-6">
+                                                <i class="ni ni-square-pin mr-1"></i>
+                                                <span>{{ $user->alamat }}</span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <i class="ni ni-chat-round mr-1"></i>
+                                                <span>{{ $user->telpon }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
