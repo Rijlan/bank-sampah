@@ -18,6 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@login');
-Route::get('user', 'UserController@getAuthenticatedUser')->middleware('jwt.verify');
+Route::post('register', 'ApiUserController@register');
+Route::post('login', 'ApiUserController@login');
+Route::get('user', 'ApiUserController@getAuthenticatedUser')->middleware('jwt.verify');
+
+// Nasabah
+Route::get('nasabah', 'ApiNasabahController@index')->middleware('jwt.verify');
