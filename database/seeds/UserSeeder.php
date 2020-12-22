@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('admin'),
                 'telpon' => '0812345678910',
                 'alamat' => 'Kantor',
-                'foto' => 'https://littlesmilespa.org/wp-content/uploads/2016/08/person-placeholder.png',
+                'foto' => 'https://p7.hiclipart.com/preview/442/17/110/computer-icons-user-profile-male-user.jpg',
                 'role' => 5
             ],
             [

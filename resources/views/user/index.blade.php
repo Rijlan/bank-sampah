@@ -10,6 +10,7 @@
             <tr>
                 <th scope="col" class="sort">Name</th>
                 <th scope="col" class="sort">Email</th>
+                <th scope="col" class="sort">Phone</th>
                 <th scope="col" class="sort">Role</th>
                 <th scope="col" class="sort text-center">Action</th>
             </tr>
@@ -20,8 +21,11 @@
                     <td>
                         {{ $user->name }}
                     </td>
-                    <td class="budget">
+                    <td>
                         {{ $user->email }}
+                    </td>
+                    <td>
+                        {{ $user->telpon }}
                     </td>
                     <td>
                         <span class="badge badge-dot mr-4">
@@ -56,9 +60,13 @@
                         <a href="#" class="mr-2">
                             <i class="ni ni-settings-gear-65"></i>
                         </a>
-                        <a href="#">
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('delete-user-{{ $user->id }}').submit();">
                             <i class="ni ni-button-power"></i>
                         </a>
+                        <form action="{{ route('user.destroy', $user->id) }}" method="POSt" class="d-none" id="delete-user-{{ $user->id }}">
+                            @csrf
+                            @method('delete')
+                        </form>
                     </td>
                 </tr>
 
@@ -101,5 +109,75 @@
             @endforeach
         </tbody>
     </table>
+</div>
+
+<div class="my-3 mx-3 float-right">
+    <a href="#" data-target="#modalTambah" data-toggle="modal">
+        <button class="btn btn-success" style="font-size: 1rem;">
+            <i class="ni ni-fat-add"></i>
+        </button>
+    </a>
+</div>
+
+<div class="modal fade" id="modalTambah" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2>Tambah User</h2>
+                <hr class="my-4">
+                <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="name">Name</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="email">Email</label>
+                                <input type="email" name="email" id="email" class="form-control" placeholder="example@example.com" required />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="telpon">Phone</label>
+                                <input type="number" name="telpon" id="telpon" class="form-control" placeholder="082xxxxxxxxxxxx" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="password">Password</label>
+                                <input type="password" name="password" id="password" class="form-control" placeholder="Password" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="password_confirmation">Repeat Password</label>
+                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Password" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="alamat">Address</label>
+                        <textarea rows="4" class="form-control" placeholder="Input your address ..." name="alamat" id="alamat"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="foto">Image</label>
+                        <input type="file" class="form-control" name="foto" id="foto" />
+                    </div>
+
+                    <button class="btn btn-success" type="submit" name="simpan" id="simpan">Save</button>
+                    <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
