@@ -137,10 +137,33 @@ class UserController extends Controller
             
             if ($request->who == 'admin') {
                 return redirect()->back()->with('message', 'User Berhasil Diupdate');
+            } else if ($request->who == 'nasabah') {
+                return redirect(route('nasabah.index'))->with('message', 'User Berhasil Diupdate');
             }
+            
             return redirect(route('user.index'))->with('message', 'User Berhasil Diupdate');
         } catch (\Throwable $th) {
             return redirect(route('user.index'))->withErrors($th->getMessage());
         }
+    }
+
+    public function nasabahIndex()
+    {
+        $users = User::where('role', 3)->get();
+        
+        return view('nasabah.index' , [
+            'page' => ['active' => 'nasabah'],
+            'users' => $users
+        ]);
+    }
+    
+    public function nasabahEdit($id)
+    {
+        $user = User::findOrFail($id);
+
+        return view('nasabah.edit' , [
+            'page' => ['active' => 'nasabah'],
+            'user' => $user
+        ]);
     }
 }

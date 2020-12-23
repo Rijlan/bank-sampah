@@ -30,4 +30,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user', 'UserController@store')->name('user.store');
     Route::get('/user/{id}', 'UserController@edit')->name('user.edit');
     Route::patch('/user/{id}', 'UserController@update')->name('user.update');
+    
+    // nasabah
+    Route::get('/nasabah', 'UserController@nasabahIndex')->name('nasabah.index');
+    Route::get('/nasabah/{id}', 'UserController@nasabahEdit')->name('nasabah.edit');
 });
