@@ -30,7 +30,7 @@ class UserController extends Controller
         try {
             $user->delete();
         } catch (\Throwable $th) {
-            return redirect()->back()->with('message', $th->getMessage());
+            return redirect()->back()->withErrors($th->getMessage());
         }
 
         return redirect()->back()->with('message', 'Berhasil Dihapus');
@@ -82,7 +82,7 @@ class UserController extends Controller
             
             return redirect()->back()->with('message', 'User Berhasil Ditambahkan');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('message', $th->getMessage());
+            return redirect()->back()->withErrors($th->getMessage());
         }
     }
 
@@ -103,6 +103,8 @@ class UserController extends Controller
         $request->validate([
             'password' => 'confirmed',
             'foto' => 'mimes:jpeg,bmp,png,gif,jpg',
+            'email' => 'unique:users,email,'.$user->id,
+            'telpon' => 'unique:users,telpon,'.$user->id
         ]);
 
         $data = $request->except(['foto']);
@@ -133,9 +135,12 @@ class UserController extends Controller
         try {
             $user->update($result);
             
+            if ($request->who == 'admin') {
+                return redirect()->back()->with('message', 'User Berhasil Diupdate');
+            }
             return redirect(route('user.index'))->with('message', 'User Berhasil Diupdate');
         } catch (\Throwable $th) {
-            return redirect(route('user.index'))->with('message', $th->getMessage());
+            return redirect(route('user.index'))->withErrors($th->getMessage());
         }
     }
 }
