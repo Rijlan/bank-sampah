@@ -4,9 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-
-    "content-hash": "3b5b487c78defbb7ec78f1e632805560",
-
+    "content-hash": "d95a623f13b4c576e97153c1a6209023",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1054,7 +1052,7 @@
                 "laravel",
                 "ui"
             ],
-            "time": "2020-11-03T19:45:19+00:00"            
+            "time": "2020-11-03T19:45:19+00:00"
         },
         {
             "name": "lcobucci/jwt",
@@ -1095,7 +1093,6 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-
                 "BSD-3-Clause"
             ],
             "authors": [

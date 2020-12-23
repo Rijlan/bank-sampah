@@ -43,6 +43,11 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
+    }
 }
 
 //

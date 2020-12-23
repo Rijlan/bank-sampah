@@ -25,5 +25,7 @@ Route::group(['middleware' => ['auth']], function () {
     // user
     Route::get('/user', 'UserController@index')->name('user.index');
     Route::delete('/user/{id}', 'UserController@destroy')->name('user.destroy');
-    Route::post('/user', 'UserController@destroy')->name('user.store');
+    Route::post('/user', 'UserController@store')->name('user.store');
+    Route::get('/user/{id}', 'UserController@edit')->name('user.edit');
+    Route::patch('/user/{id}', 'UserController@update')->name('user.update');
 });
