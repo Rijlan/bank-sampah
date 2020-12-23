@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use App\Catatan;
 use App\Http\Resources\CatatanResource;
+use App\Http\Resources\PenjemputanResource;
 use App\Penjemputan;
 use App\Tabungan;
 use App\User;
@@ -76,13 +77,11 @@ class ApiNasabahController extends Controller
     */
     public function riwayatBarang()
     {
-   
-        $barang = CatatanResource::collection(Catatan::all());
+        $data = Catatan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+        $barang = CatatanResource::collection($data);
         $barang = $barang->sortByDesc('created_at');
         $barang = $barang->values()->all();
-        
-        // $barang = Catatan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
- 
+         
         if (empty($barang)) {
             return response()->json([
                 'status' => 'failed',
@@ -133,7 +132,6 @@ class ApiNasabahController extends Controller
     public function requestPenjemputan(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required',
             'telpon' => 'required',
             'alamat' => 'required',
             'penjemput_id' => 'required',
@@ -143,8 +141,8 @@ class ApiNasabahController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
+        $user = User::where('id', Auth::id())->first();
         $penjemput = Penjemputan::create([
-            'nama' => $request->nama,
             'alamat' => $request->alamat,
             'telpon' => $request->telpon,
             'user_id' => Auth::id(),
@@ -175,7 +173,8 @@ class ApiNasabahController extends Controller
     public function riwayatPenjemputan()
     {
 
-        $penjemput = Penjemputan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+        $data = Penjemputan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+        $penjemput = PenjemputanResource::collection($data);
 
         if ($penjemput->isEmpty()) {
             return response()->json([
