@@ -23,7 +23,7 @@ class ApiNasabahController extends Controller
      */
     public function index()
     {
-        $user = User::where('id', Auth::id())->first();
+        $user = User::where('id', Auth::id())->get();
         $debit = Tabungan::where('user_id', Auth::id())->sum('debit');
         $kredit = Tabungan::where('user_id', Auth::id())->sum('kredit');
         $duit = $debit-$kredit;
@@ -40,8 +40,8 @@ class ApiNasabahController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'data tersedia',
-            'user' => $user,
             'uang' => $uang,
+            'user' => $user,
         ], 200);
 
     }
@@ -105,6 +105,32 @@ class ApiNasabahController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function penjemputan()
+    {
+
+        $penjemput = User::where('role', 1)->get();
+
+        if ($penjemput->isEmpty()) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => "data tidak tersedia",
+                'data' => null
+            ], 400);
+        }
+ 
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data tersedia',
+            'penjemput' => $penjemput
+        ], 200);
+ 
+    }
+
+    /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function datarNasabah()
     {
 
         $penjemput = User::where('role', 1)->get();
