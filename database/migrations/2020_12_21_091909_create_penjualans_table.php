@@ -16,7 +16,7 @@ class CreatePenjualansTable extends Migration
         Schema::create('penjualans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('jenis_sampah_id');
-            $table->integer('berat');
+            $table->double('berat');
             $table->timestamps();
         });
     }

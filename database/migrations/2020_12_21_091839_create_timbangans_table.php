@@ -16,7 +16,7 @@ class CreateTimbangansTable extends Migration
         Schema::create('timbangans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('jenis_sampah_id');
-            $table->integer('berat');
+            $table->double('berat');
             $table->timestamps();
         });
     }

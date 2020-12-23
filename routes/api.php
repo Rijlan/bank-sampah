@@ -35,5 +35,6 @@ Route::post('mintapenjemputan', 'ApiNasabahController@requestPenjemputan')->midd
 Route::get('pengurus1', 'ApiPengurus1Controller@index')->middleware('jwt.verify');
 Route::get('mintajemput', 'ApiPengurus1Controller@mintaJemput')->middleware('jwt.verify');
 Route::get('datajemput', 'ApiPengurus1Controller@dataJemput')->middleware('jwt.verify');
+Route::get('pendataannasabah', 'ApiPengurus1Controller@pendataanNasabah')->middleware('jwt.verify');
 Route::get('pendataan', 'ApiPengurus1Controller@pendataan')->middleware('jwt.verify');
 Route::post('pendataan/{id}', 'ApiPengurus1Controller@pencatatan')->middleware('jwt.verify');

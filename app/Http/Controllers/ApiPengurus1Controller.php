@@ -79,6 +79,32 @@ class ApiPengurus1Controller extends Controller
 
     }
 
+    /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function pendataanNasabah()
+    {
+
+        $penjemput = User::where('role', 3)->get();
+
+        if ($penjemput->isEmpty()) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => "data tidak tersedia",
+                'data' => null
+            ], 400);
+        }
+ 
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data tersedia',
+            'penjemput' => $penjemput
+        ], 200);
+ 
+    }
+
     public function pendataan()
     {
         $jenissampah = JenisSampah::all();
