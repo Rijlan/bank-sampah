@@ -17,11 +17,15 @@ class PenjemputanResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'nama' => $this->user->name,
             'alamat' => $this->alamat,
             'telpon' => $this->telpon,
-            'nama' => $this->user->name,
-            'penjemput' => $this->penjemput->name,
-            'created_at' =>$this->created_at, 
+            'foto_penjemput' => $this->penjemput->foto,
+            'telpon_penjemput' => $this->penjemput->telpon,
+            'status' => $this->status,
+            'user_id' => $this->user->id,
+            'penjemput_id' => $this->penjemput_id,
+            'tanggal' =>$this->created_at, 
             'updated_at' =>$this->updated_at, 
         ];
 

@@ -2,12 +2,24 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Penjemputan extends Model
 {
-    protected $fillable = ['nama', 'alamat', 'telpon', 'user_id', 'penjemput_id'];
+    protected $fillable = ['status', 'alamat', 'telpon', 'user_id', 'penjemput_id'];
 
+    public function getCreatedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])
+           ->format('H-M-Y');
+    }
+    
+    public function getUpdatedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['updated_at'])
+           ->diffForHumans();
+    }
 
     public function user()
     {

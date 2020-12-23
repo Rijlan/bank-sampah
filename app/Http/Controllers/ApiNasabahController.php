@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
 use App\Catatan;
+use App\Chat;
 use App\Http\Resources\CatatanResource;
 use App\Http\Resources\PenjemputanResource;
 use App\Penjemputan;
@@ -141,15 +142,22 @@ class ApiNasabahController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-        $user = User::where('id', Auth::id())->first();
         $penjemput = Penjemputan::create([
             'alamat' => $request->alamat,
             'telpon' => $request->telpon,
+            'status' => 1,
             'user_id' => Auth::id(),
-            'penjemput_id' => $request->penjemput,
+            'penjemput_id' => $request->penjemput_id,
         ]);
 
-        if ($penjemput->isEmpty()) {
+        $pesan = Chat::create([
+            'from' => Auth::id(),
+            'to' => $request->penjemput_id,
+            'status' => 1,
+            'pesan' => 'permisi pak, saya telah mengirim request penjemputan, apakah bapak bersedia untuk menerimanya?',
+        ]);
+        
+        if (empty($penjemput)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => "data tidak tersedia",
@@ -160,7 +168,8 @@ class ApiNasabahController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'data tersedia',
-            'penjemput' => $penjemput
+            'penjemput' => $penjemput,
+            'pesan' => $pesan,
         ], 200);
  
     }
@@ -173,9 +182,11 @@ class ApiNasabahController extends Controller
     public function riwayatPenjemputan()
     {
 
-        $data = Penjemputan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+        $data = Penjemputan::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
         $penjemput = PenjemputanResource::collection($data);
-
+        $penjemput = $penjemput->sortByDesc('created_at');
+        $penjemput = $penjemput->values()->all();
+        
         if ($penjemput->isEmpty()) {
             return response()->json([
                 'status' => 'failed',
