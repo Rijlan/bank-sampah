@@ -23,7 +23,7 @@ class ApiNasabahController extends Controller
      */
     public function index()
     {
-        $user = User::where('id', Auth::id())->get();
+        $user = User::where('id', Auth::id())->first();
         $debit = Tabungan::where('user_id', Auth::id())->sum('debit');
         $kredit = Tabungan::where('user_id', Auth::id())->sum('kredit');
         $duit = $debit-$kredit;
