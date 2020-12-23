@@ -15,6 +15,7 @@ class CreatePenjemputansTable extends Migration
     {
         Schema::create('penjemputans', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
             $table->string('alamat');
             $table->string('telpon');
             $table->unsignedBigInteger('user_id');

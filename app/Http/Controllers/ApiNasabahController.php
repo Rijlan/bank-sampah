@@ -133,6 +133,7 @@ class ApiNasabahController extends Controller
     public function requestPenjemputan(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'nama' => 'required',
             'telpon' => 'required',
             'alamat' => 'required',
             'penjemput_id' => 'required',
@@ -143,6 +144,7 @@ class ApiNasabahController extends Controller
         }
 
         $penjemput = Penjemputan::create([
+            'nama' => $request->nama,
             'alamat' => $request->alamat,
             'telpon' => $request->telpon,
             'status' => 1,
@@ -154,7 +156,7 @@ class ApiNasabahController extends Controller
             'from' => Auth::id(),
             'to' => $request->penjemput_id,
             'status' => 1,
-            'pesan' => 'permisi pak, saya telah mengirim request penjemputan, apakah bapak bersedia untuk menerimanya?',
+            'pesan' => 'permisi pak, saya telah mengirim alamat penjemputan, apakah bapak bersedia untuk mengambil barang saya di alamat tersebut?',
         ]);
         
         if (empty($penjemput)) {
