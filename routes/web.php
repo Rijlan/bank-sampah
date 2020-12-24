@@ -34,4 +34,10 @@ Route::group(['middleware' => ['auth']], function () {
     // nasabah
     Route::get('/nasabah', 'UserController@nasabahIndex')->name('nasabah.index');
     Route::get('/nasabah/{id}', 'UserController@nasabahEdit')->name('nasabah.edit');
+
+    // jenis sampah
+    Route::get('/jenis-sampah', 'JenisSampahController@index')->name('jenis.index');
+    Route::delete('/jenis-sampah/{id}', 'JenisSampahController@destroy')->name('jenis.destroy');
+    Route::post('/jenis-sampah', 'JenisSampahController@store')->name('jenis.store');
+    Route::patch('/jenis-sampah/{id}', 'JenisSampahController@update')->name('jenis.update');
 });
