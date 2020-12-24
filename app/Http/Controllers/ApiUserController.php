@@ -65,7 +65,7 @@ class ApiUserController extends Controller
             'password' => Hash::make($request->get('password')),
             'telpon' => $request->telpon,
             'alamat' => $request->alamat,
-            'role' => 1,
+            'role' => 3,
             'foto' => $foto,
         ]);
 

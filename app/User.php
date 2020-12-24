@@ -35,6 +35,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Catatan::class);
     }
 
+    public function penjemputan()
+    {
+        return $this->hasMany(Penjemputan::class);
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
