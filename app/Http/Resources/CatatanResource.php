@@ -17,11 +17,12 @@ class CatatanResource extends JsonResource
         // return parent::toArray($request);
 
         return [
-            'user_id' => $this->user_id,
+            'id' => $this->id,
             'jenis_sampah' => $this->jenisSampah->jenis,
             'harga_sampah' => $this->jenisSampah->harga_nasabah,
             'keterangan' => $this->keterangan,
             'berat' => $this->berat,
+            'user_id' => $this->user_id,
             'created_at' =>$this->created_at, 
             'updated_at' =>$this->updated_at, 
         ];

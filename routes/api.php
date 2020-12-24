@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// user
 Route::post('register', 'ApiUserController@register');
 Route::post('login', 'ApiUserController@login');
 Route::get('user', 'ApiUserController@getAuthenticatedUser')->middleware('jwt.verify');
@@ -27,5 +28,13 @@ Route::get('nasabah', 'ApiNasabahController@index')->middleware('jwt.verify');
 Route::get('riwayatuang', 'ApiNasabahController@riwayatUang')->middleware('jwt.verify');
 Route::get('riwayatbarang', 'ApiNasabahController@riwayatBarang')->middleware('jwt.verify');
 Route::get('riwayatpenjemputan', 'ApiNasabahController@riwayatPenjemputan')->middleware('jwt.verify');
-Route::get('penjemputan', 'ApiNasabahController@penjemputan')->middleware('jwt.verify');
-Route::post('penjemputan', 'ApiNasabahController@requestPenjemputan')->middleware('jwt.verify');
+Route::get('mintapenjemputan', 'ApiNasabahController@penjemputan')->middleware('jwt.verify');
+Route::post('mintapenjemputan', 'ApiNasabahController@requestPenjemputan')->middleware('jwt.verify');
+
+// pengurus1
+Route::get('pengurus1', 'ApiPengurus1Controller@index')->middleware('jwt.verify');
+Route::get('mintajemput', 'ApiPengurus1Controller@mintaJemput')->middleware('jwt.verify');
+Route::get('datajemput', 'ApiPengurus1Controller@dataJemput')->middleware('jwt.verify');
+Route::get('pendataannasabah', 'ApiPengurus1Controller@pendataanNasabah')->middleware('jwt.verify');
+Route::get('pendataan', 'ApiPengurus1Controller@pendataan')->middleware('jwt.verify');
+Route::post('pendataan/{id}', 'ApiPengurus1Controller@pencatatan')->middleware('jwt.verify');

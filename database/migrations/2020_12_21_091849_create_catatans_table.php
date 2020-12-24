@@ -18,7 +18,7 @@ class CreateCatatansTable extends Migration
             $table->unsignedBigInteger('jenis_sampah_id');
             $table->unsignedBigInteger('user_id');
             $table->text('keterangan');
-            $table->integer('berat');
+            $table->double('berat');
             $table->timestamps();
         });
     }

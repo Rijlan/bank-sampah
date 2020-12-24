@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
 use App\Catatan;
+use App\Chat;
 use App\Http\Resources\CatatanResource;
+use App\Http\Resources\PenjemputanResource;
 use App\Penjemputan;
 use App\Tabungan;
 use App\User;
@@ -21,13 +23,13 @@ class ApiNasabahController extends Controller
      */
     public function index()
     {
-        $user = User::where('id', Auth::id())->get();
+        $user = User::where('id', Auth::id())->first();
         $debit = Tabungan::where('user_id', Auth::id())->sum('debit');
         $kredit = Tabungan::where('user_id', Auth::id())->sum('kredit');
         $duit = $debit-$kredit;
         $uang = $duit;
 
-        if ($user->isEmpty()) {
+        if (empty($user)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => "data tidak tersedia",
@@ -76,13 +78,11 @@ class ApiNasabahController extends Controller
     */
     public function riwayatBarang()
     {
-   
-        $barang = CatatanResource::collection(Catatan::all());
+        $data = Catatan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+        $barang = CatatanResource::collection($data);
         $barang = $barang->sortByDesc('created_at');
         $barang = $barang->values()->all();
-        
-        // $barang = Catatan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
- 
+         
         if (empty($barang)) {
             return response()->json([
                 'status' => 'failed',
@@ -147,11 +147,19 @@ class ApiNasabahController extends Controller
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'telpon' => $request->telpon,
+            'status' => 1,
             'user_id' => Auth::id(),
-            'penjemput_id' => $request->penjemput,
+            'penjemput_id' => $request->penjemput_id,
         ]);
 
-        if ($penjemput->isEmpty()) {
+        $pesan = Chat::create([
+            'from' => Auth::id(),
+            'to' => $request->penjemput_id,
+            'status' => 1,
+            'pesan' => 'permisi pak, saya telah mengirim alamat penjemputan, apakah bapak bersedia untuk mengambil barang saya di alamat tersebut?',
+        ]);
+        
+        if (empty($penjemput)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => "data tidak tersedia",
@@ -162,7 +170,8 @@ class ApiNasabahController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'data tersedia',
-            'penjemput' => $penjemput
+            'penjemput' => $penjemput,
+            'pesan' => $pesan,
         ], 200);
  
     }
@@ -175,8 +184,11 @@ class ApiNasabahController extends Controller
     public function riwayatPenjemputan()
     {
 
-        $penjemput = Penjemputan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
-
+        $data = Penjemputan::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        $penjemput = PenjemputanResource::collection($data);
+        $penjemput = $penjemput->sortByDesc('created_at');
+        $penjemput = $penjemput->values()->all();
+        
         if ($penjemput->isEmpty()) {
             return response()->json([
                 'status' => 'failed',
