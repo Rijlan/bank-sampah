@@ -17,6 +17,7 @@
     <!-- Page plugins -->
     <!-- Argon CSS -->
     <link rel="stylesheet" href="{{ asset('css/argon.css?v=1.2.0') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
 </head>
 
 <body>
@@ -25,7 +26,7 @@
         <div class="scrollbar-inner">
             <!-- Brand -->
             <div class="sidenav-header  align-items-center">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     <img src="{{ asset('img/brand/blue.png') }}" class="navbar-brand-img"
                         alt="...">
                 </a>
@@ -48,7 +49,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'nasabah' ? 'active' : '' }}" href="#">
+                            <a class="nav-link {{ $page['active'] == 'nasabah' ? 'active' : '' }}" href="{{ route('nasabah.index') }}">
                                 <i class="ni ni-single-02 text-green"></i>
                                 <span class="nav-link-text">Nasabah</span>
                             </a>
@@ -227,11 +228,11 @@
                                 <div class="dropdown-header noti-title">
                                     <h6 class="text-overflow m-0">Welcome!</h6>
                                 </div>
-                                <a href="#!" class="dropdown-item">
+                                <a href="{{ route('admin.profile') }}" class="dropdown-item">
                                     <i class="ni ni-single-02"></i>
                                     <span>My profile</span>
                                 </a>
-                                <a href="#!" class="dropdown-item">
+                                <a href="{{ route('admin.profile') }}" class="dropdown-item">
                                     <i class="ni ni-settings-gear-65"></i>
                                     <span>Settings</span>
                                 </a>
