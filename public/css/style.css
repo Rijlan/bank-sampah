@@ -1,0 +1,15 @@
+.message {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 450px;
+    max-width: 100%;
+}
+
+.message .alert {
+    border-radius: 0;
+}
+
+.inner-message {
+    margin: 0 auto;
+}
