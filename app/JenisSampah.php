@@ -13,4 +13,9 @@ class JenisSampah extends Model
     {
         return $this->hasMany(Catatan::class);
     }
+   
+    public function tabungan()
+    {
+        return $this->hasMany(Tabungan::class);
+    }
 }

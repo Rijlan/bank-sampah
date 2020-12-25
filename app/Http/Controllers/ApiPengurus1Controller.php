@@ -84,7 +84,7 @@ class ApiPengurus1Controller extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function pendataanNasabah()
+    public function daftarNasabah()
     {
 
         $penjemput = User::where('role', 3)->get();
@@ -107,7 +107,7 @@ class ApiPengurus1Controller extends Controller
 
     public function pendataan()
     {
-        $jenissampah = JenisSampah::all();
+        $jenissampah = JenisSampah::get();
         if (empty($jenissampah)) {
             return response()->json([
                 'status' => 'failed',

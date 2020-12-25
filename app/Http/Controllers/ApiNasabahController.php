@@ -7,12 +7,12 @@ use App\Catatan;
 use App\Chat;
 use App\Http\Resources\CatatanResource;
 use App\Http\Resources\PenjemputanResource;
+use App\JenisSampah;
 use App\Penjemputan;
 use App\Tabungan;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use phpDocumentor\Reflection\Types\Resource_;
 
 class ApiNasabahController extends Controller
 {
@@ -71,18 +71,36 @@ class ApiNasabahController extends Controller
 
    }
 
-      /**
+    /**
     * Display a listing of the resource.
     *
     * @return \Illuminate\Http\Response
     */
     public function riwayatBarang()
     {
-        $data = Catatan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
+        $data = Catatan::where('user_id', Auth::id())->get();
+
         $barang = CatatanResource::collection($data);
         $barang = $barang->sortByDesc('created_at');
         $barang = $barang->values()->all();
+        
          
+        // $barang = Catatan::select('jenis_barangs.jenis', 'tabungans.dabit', 'tabungans.kredit', 'catatans.berat','catatans.jenis_barang_id')
+        // ->join('jenis_barangs', 'jenis_barangs.id', '=', 'catatans.jenis_barang_id')
+        // ->join('tabungans', 'tabungans.user_id', '=', 'catatans.user_id')
+        // ->where('catatans.user_id', '=', Auth::id())
+        // ->get();
+
+        // $catatan = ;
+
+        // $jenis_sampah = JenisSampah::first();
+        // $catatan = Catatan::where('user_id', Auth::id())->first();
+        // $tabungan = Tabungan::with('catatan')->first();
+        // $barang = $tabungan->catatan->with('jenisSamapah')->get();
+        // $barang = Tabungan::whereHas('catatan', function ($query) {
+        //     $query->with('jenisSampah')->get();
+        // })->get();
+
         if (empty($barang)) {
             return response()->json([
                 'status' => 'failed',
