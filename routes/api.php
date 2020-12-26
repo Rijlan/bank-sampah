@@ -33,8 +33,13 @@ Route::post('nasabah/penjemputan', 'ApiNasabahController@requestPenjemputan')->m
 
 // pengurus1
 Route::get('pengurus1', 'ApiPengurus1Controller@index')->middleware('jwt.verify');
-Route::get('pengurus1/mintajemput', 'ApiPengurus1Controller@mintaJemput')->middleware('jwt.verify');
 Route::get('pengurus1/datajemput', 'ApiPengurus1Controller@dataJemput')->middleware('jwt.verify');
+Route::get('pengurus1/harusjemput', 'ApiPengurus1Controller@harusJemput')->middleware('jwt.verify');
+Route::get('pengurus1/riwayatjemput', 'ApiPengurus1Controller@riwayatJemput')->middleware('jwt.verify');
+Route::get('pengurus1/detaildatajemput/{id}', 'ApiPengurus1Controller@detailDataJemput')->middleware('jwt.verify');
+Route::get('pengurus1/terimajemput{id}', 'ApiPengurus1Controller@terimaJemput')->middleware('jwt.verify');
+Route::get('pengurus1/selesaijemput{id}', 'ApiPengurus1Controller@selesaiJemput')->middleware('jwt.verify');
+Route::get('pengurus1/tolakjemput{id}', 'ApiPengurus1Controller@tolakJemput')->middleware('jwt.verify');
 Route::get('pengurus1/daftarnasabah', 'ApiPengurus1Controller@daftarNasabah')->middleware('jwt.verify');
-Route::get('pengurus1/pendataan', 'ApiPengurus1Controller@pendataan')->middleware('jwt.verify');
+Route::get('pengurus1/pendataan', 'ApiPengurus1Controller@jenisSampah')->middleware('jwt.verify');
 Route::post('pengurus1/pendataan/{id}', 'ApiPengurus1Controller@pencatatan')->middleware('jwt.verify');

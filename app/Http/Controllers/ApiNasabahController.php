@@ -11,6 +11,7 @@ use App\JenisSampah;
 use App\Penjemputan;
 use App\Tabungan;
 use App\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -154,6 +155,7 @@ class ApiNasabahController extends Controller
             'nama' => 'required',
             'telpon' => 'required',
             'alamat' => 'required',
+            'foto' => 'required',
             'penjemput_id' => 'required',
         ]);
 
@@ -161,10 +163,28 @@ class ApiNasabahController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
+        $foto = null;
+
+        if ($request->foto) {
+            $img = base64_encode(file_get_contents($request->foto));
+            $client = new Client();
+            $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $img,
+                    'format' => 'json',
+                ]
+            ]);
+            $array = json_decode($res->getBody()->getContents());
+            $foto = $array->image->file->resource->chain->image;
+        }
+        
         $penjemput = Penjemputan::create([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'telpon' => $request->telpon,
+            'foto' => $foto,
             'status' => 1,
             'user_id' => Auth::id(),
             'penjemput_id' => $request->penjemput_id,
