@@ -105,19 +105,22 @@ class ApiPengurus1Controller extends Controller
     public function detailDataJemput($id)
     {
         $data = Penjemputan::where('penjemput_id', Auth::id())->where('id', $id)->first();
+        $user = PenjemputanResource::collection($data);
+        $user = $user->sortByDesc('created_at');
+        $user = $user->values()->all();
         
-        if (empty($data)) {
+        if (empty($user)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => "data tidak tersedia",
-                'data' => null
+                'user' => null
             ], 400);
         }
 
         return response()->json([
             'status' => 'success',
             'message' => 'data tersedia',
-            'data' => $data,
+            'user' => $data,
         ], 200);
 
     }
