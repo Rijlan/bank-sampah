@@ -31,6 +31,11 @@ Route::get('nasabah/riwayatpenjemputan', 'ApiNasabahController@riwayatPenjemputa
 Route::get('nasabah/penjemputan', 'ApiNasabahController@penjemputan')->middleware('jwt.verify');
 Route::post('nasabah/penjemputan', 'ApiNasabahController@requestPenjemputan')->middleware('jwt.verify');
 
+// chat nasabah
+Route::get('nasabah/kontak', 'ApiChatNasabahController@kontak')->middleware('jwt.verify');
+Route::get('nasabah/pesan/{id}', 'ApiNasabahController@peasan')->middleware('jwt.verify');
+Route::post('nasabah/kirim/{id}', 'ApiNasabahController@kirim')->middleware('jwt.verify');
+
 // pengurus1
 Route::get('pengurus1', 'ApiPengurus1Controller@index')->middleware('jwt.verify');
 Route::get('pengurus1/datajemput', 'ApiPengurus1Controller@dataJemput')->middleware('jwt.verify');
