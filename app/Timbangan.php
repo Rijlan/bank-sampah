@@ -12,7 +12,7 @@ class Timbangan extends Model
     public function getCreatedAtAttribute()
     {
         return Carbon::parse($this->attributes['created_at'])
-           ->format('H-M-Y');
+           ->format('d-M-Y');
     }
     
     public function getUpdatedAtAttribute()
