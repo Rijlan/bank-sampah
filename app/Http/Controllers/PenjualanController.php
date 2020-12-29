@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\JenisSampah;
 use App\Penjualan;
 use Illuminate\Http\Request;
 
@@ -17,10 +18,12 @@ class PenjualanController extends Controller
     public function index()
     {
         $penjualans = Penjualan::all();
+        $jenis_sampahs = JenisSampah::all();
 
         return view('penjualan.index', [
             'page' => $this->page,
-            'penjualans' => $penjualans
+            'penjualans' => $penjualans,
+            'jenis_sampahs' => $jenis_sampahs
         ]);
     }
 
@@ -35,5 +38,24 @@ class PenjualanController extends Controller
         }
 
         return redirect()->back()->with('message', 'Berhasil Dihapus');
+    }
+
+    public function store(Request $request, Penjualan $penjualan)
+    {
+        $request->validate([
+            'jenis_sampah_id' => 'required|integer',
+            'berat' => 'required|integer',
+        ]);
+
+        $penjualan->jenis_sampah_id = $request->jenis_sampah_id;
+        $penjualan->berat = $request->berat;
+
+        try {
+            $penjualan->save();
+            
+            return redirect()->back()->with('message', 'Penjualan Berhasil Ditambahkan');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors($th->getMessage());
+        }
     }
 }

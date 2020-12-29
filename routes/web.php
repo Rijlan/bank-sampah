@@ -43,13 +43,13 @@ Route::group(['middleware' => ['auth']], function () {
 
     // catatan
     Route::get('/catatan', 'CatatanController@index')->name('catatan.index');
-    Route::delete('/catatan/{id}', 'CatatanController@destroy')->name('catatan.destroy');
+    // Route::delete('/catatan/{id}', 'CatatanController@destroy')->name('catatan.destroy');
 
     // penjualan
     Route::get('/penjualan', 'PenjualanController@index')->name('penjualan.index');
-    Route::delete('/penjualan/{id}', 'PenjualanController@destroy')->name('penjualan.destroy');
+    // Route::delete('/penjualan/{id}', 'PenjualanController@destroy')->name('penjualan.destroy');
+    Route::post('/penjualan', 'PenjualanController@store')->name('penjualan.store');
 
     // keuangan
     Route::get('/keuangan', 'KeuanganController@index')->name('keuangan.index');
-    Route::delete('/keuangan/{id}', 'KeuanganController@index')->name('keuangan.destroy');
 });

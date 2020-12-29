@@ -38,16 +38,18 @@
                             <a href="#" data-target="#modalInfo{{ $user->telpon }}" data-toggle="modal" class="mr-2">
                                 <i class="ni ni-zoom-split-in"></i>
                             </a>
+                            @if (Auth::user()->role == 5)
                             <a href="{{ route('nasabah.edit', $user->id) }}" class="mr-2">
                                 <i class="ni ni-settings-gear-65"></i>
                             </a>
                             <a href="#" onclick="event.preventDefault(); document.getElementById('delete-user-{{ $user->id }}').submit();">
                                 <i class="ni ni-button-power"></i>
                             </a>
-                            <form action="{{ route('user.destroy', $user->id) }}" method="POSt" class="d-none" id="delete-user-{{ $user->id }}">
+                            <form action="{{ route('user.destroy', $user->id) }}" method="POST" class="d-none" id="delete-user-{{ $user->id }}">
                                 @csrf
                                 @method('delete')
                             </form>
+                            @endif
                         </td>
                     </tr>
 
@@ -119,6 +121,7 @@
     </div>
 @endif
 
+@if (Auth::user()-> role == 5)
 <div class="my-3 mx-3 float-right">
     <a href="#" data-target="#modalTambah" data-toggle="modal">
         <button class="btn btn-success" style="font-size: 1rem;">
@@ -126,6 +129,7 @@
         </button>
     </a>
 </div>
+@endif
 
 <div class="modal fade" id="modalTambah" role="dialog">
     <div class="modal-dialog modal-lg">

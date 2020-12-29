@@ -45,13 +45,13 @@
                             <a href="#" data-target="#modalInfo{{ $catatan->id }}" data-toggle="modal" class="mr-2">
                                 <i class="ni ni-zoom-split-in"></i>
                             </a>
-                            <a href="#" onclick="event.preventDefault(); document.getElementById('delete-catatan-{{ $catatan->id }}').submit();">
+                            {{-- <a href="#" onclick="event.preventDefault(); document.getElementById('delete-catatan-{{ $catatan->id }}').submit();">
                                 <i class="ni ni-button-power"></i>
                             </a>
                             <form action="{{ route('catatan.destroy', $catatan->id) }}" method="POSt" class="d-none" id="delete-catatan-{{ $catatan->id }}">
                                 @csrf
                                 @method('delete')
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
 
