@@ -13,3 +13,21 @@
 .inner-message {
     margin: 0 auto;
 }
+
+.border-top td {
+    border-top: 2px solid rgb(77, 76, 76);
+}
+
+.non-bordered {
+    border: 0;
+}
+
+.left-right {
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .left-right {
+        text-align: left;
+    }
+}

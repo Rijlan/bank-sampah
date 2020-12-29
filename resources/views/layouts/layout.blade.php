@@ -61,19 +61,19 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'setoran' ? 'active' : '' }}" href="#">
+                            <a class="nav-link {{ $page['active'] == 'catatan' ? 'active' : '' }}" href="{{ route('catatan.index') }}">
                                 <i class="ni ni-basket text-yellow"></i>
-                                <span class="nav-link-text">Setoran</span>
+                                <span class="nav-link-text">Catatan</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'penjualan' ? 'active' : '' }}" href="#">
+                            <a class="nav-link {{ $page['active'] == 'penjualan' ? 'active' : '' }}" href="{{ route('penjualan.index') }}">
                                 <i class="ni ni-send text-default"></i>
                                 <span class="nav-link-text">Penjualan</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'keuangan' ? 'active' : '' }}" href="#">
+                            <a class="nav-link {{ $page['active'] == 'keuangan' ? 'active' : '' }}" href="{{ route('keuangan.index') }}">
                                 <i class="ni ni-money-coins text-info"></i>
                                 <span class="nav-link-text">Keuangan</span>
                             </a>
