@@ -20,4 +20,9 @@ class Penjualan extends Model
         return Carbon::parse($this->attributes['updated_at'])
            ->diffForHumans();
     }
+
+    public function jenisSampah()
+    {
+        return $this->belongsTo(JenisSampah::class);
+    }
 }

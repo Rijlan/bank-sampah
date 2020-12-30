@@ -42,38 +42,42 @@
                                 <span class="nav-link-text">Dashboard</span>
                             </a>
                         </li>
+                        @if (Auth::user()->role == 5)
                         <li class="nav-item">
                             <a class="nav-link {{ $page['active'] == 'user' ? 'active' : '' }}" href="{{ route('user.index') }}">
                                 <i class="ni ni-circle-08 text-orange"></i>
                                 <span class="nav-link-text">User</span>
                             </a>
                         </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link {{ $page['active'] == 'nasabah' ? 'active' : '' }}" href="{{ route('nasabah.index') }}">
                                 <i class="ni ni-single-02 text-green"></i>
                                 <span class="nav-link-text">Nasabah</span>
                             </a>
                         </li>
+                        @if (Auth::user()->role == 5)
                         <li class="nav-item">
                             <a class="nav-link {{ $page['active'] == 'jenis sampah' ? 'active' : '' }}" href="{{ route('jenis.index') }}">
                                 <i class="ni ni-bullet-list-67 text-primary"></i>
                                 <span class="nav-link-text">Jenis Sampah</span>
                             </a>
                         </li>
+                        @endif
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'setoran' ? 'active' : '' }}" href="#">
+                            <a class="nav-link {{ $page['active'] == 'catatan' ? 'active' : '' }}" href="{{ route('catatan.index') }}">
                                 <i class="ni ni-basket text-yellow"></i>
-                                <span class="nav-link-text">Setoran</span>
+                                <span class="nav-link-text">Catatan</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'penjualan' ? 'active' : '' }}" href="#">
+                            <a class="nav-link {{ $page['active'] == 'penjualan' ? 'active' : '' }}" href="{{ route('penjualan.index') }}">
                                 <i class="ni ni-send text-default"></i>
                                 <span class="nav-link-text">Penjualan</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'keuangan' ? 'active' : '' }}" href="#">
+                            <a class="nav-link {{ $page['active'] == 'keuangan' ? 'active' : '' }}" href="{{ route('keuangan.index') }}">
                                 <i class="ni ni-money-coins text-info"></i>
                                 <span class="nav-link-text">Keuangan</span>
                             </a>

@@ -40,4 +40,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/jenis-sampah/{id}', 'JenisSampahController@destroy')->name('jenis.destroy');
     Route::post('/jenis-sampah', 'JenisSampahController@store')->name('jenis.store');
     Route::patch('/jenis-sampah/{id}', 'JenisSampahController@update')->name('jenis.update');
+
+    // catatan
+    Route::get('/catatan', 'CatatanController@index')->name('catatan.index');
+    // Route::delete('/catatan/{id}', 'CatatanController@destroy')->name('catatan.destroy');
+
+    // penjualan
+    Route::get('/penjualan', 'PenjualanController@index')->name('penjualan.index');
+    // Route::delete('/penjualan/{id}', 'PenjualanController@destroy')->name('penjualan.destroy');
+    Route::post('/penjualan', 'PenjualanController@store')->name('penjualan.store');
+
+    // keuangan
+    Route::get('/keuangan', 'KeuanganController@index')->name('keuangan.index');
 });
