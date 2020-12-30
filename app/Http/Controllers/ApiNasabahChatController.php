@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ApiNasabahChatController extends Controller
 {
-    public function kontak()
+    public function kontakNasabah()
     {
         $user = User::where('role', 1)->get();
         if (empty($user)) {
