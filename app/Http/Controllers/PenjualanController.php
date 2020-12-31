@@ -43,10 +43,16 @@ class PenjualanController extends Controller
     public function store(Request $request, Penjualan $penjualan)
     {
         $request->validate([
+            'nama_pengepul' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'telpon' => 'required|string|max:255',
             'jenis_sampah_id' => 'required|integer',
             'berat' => 'required|integer',
         ]);
 
+        $penjualan->nama_pengepul = $request->nama_pengepul;
+        $penjualan->alamat = $request->alamat;
+        $penjualan->telpon = $request->telpon;
         $penjualan->jenis_sampah_id = $request->jenis_sampah_id;
         $penjualan->berat = $request->berat;
 

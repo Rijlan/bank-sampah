@@ -64,7 +64,7 @@
                                     </button>
                                     <h2 class="text-center">Detail Catatan</h2>
                                     <hr class="my-4">
-                                    <div class="modal-body p-0">
+                                    <div class="p-0">
                                         <div class="row">
                                             <div class="col-md-6 left-right">
                                                 <ul class="list-group">
@@ -79,14 +79,14 @@
                                                         <span class="text-muted">{{ $catatan->user->name }}</span>
                                                     </li>
                                                     <li class="font-weight-bold list-group-item non-bordered">
-                                                        <span>Lokasi</span>
+                                                        <span>Telpon</span>
                                                         <br>
-                                                        <span class="text-muted">{{ $catatan->user->alamat }}</span>
+                                                        <span class="text-muted">{{ $catatan->user->telpon }}</span>
                                                     </li>
                                                     <li class="font-weight-bold list-group-item non-bordered">
                                                         <span>Keterangan</span>
                                                         <br>
-                                                        <span class="text-muted">{{ $catatan->keterangan }}</span>
+                                                        <span class="text-muted">{{ $catatan->keterangan == 1 ? 'Dijemput' : ($catatan->keterangan == 2 ? 'Dikantor' : '')}}</span>
                                                     </li>
                                                 </ul>
                                             </div>
