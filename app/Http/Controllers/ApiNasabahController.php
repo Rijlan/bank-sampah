@@ -55,7 +55,9 @@ class ApiNasabahController extends Controller
    public function riwayatUang()
    {
        $uang = Tabungan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
-
+       $debit = Tabungan::where('user_id', Auth::id())->sum('debit');
+       $kredit = Tabungan::where('user_id', Auth::id())->sum('kredit');
+       
        if ($uang->isEmpty()) {
            return response()->json([
                'status' => 'failed',
@@ -67,7 +69,9 @@ class ApiNasabahController extends Controller
        return response()->json([
            'status' => 'success',
            'message' => 'data tersedia',
-           'uang' => $uang
+           'uang' => $uang,
+           'debit' => $debit,
+           'kredit' => $kredit,
        ], 200);
 
    }
