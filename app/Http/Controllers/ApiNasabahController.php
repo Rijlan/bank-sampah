@@ -251,7 +251,7 @@ class ApiNasabahController extends Controller
     public function detailRiwayatPenjemputan($id)
     {
 
-        $data = Penjemputan::where('user_id', Auth::id())->where('id', $id)->get();
+        $data = Penjemputan::where('user_id', Auth::id())->where('id', $id)->first();
         
         if (empty($data)) {
             return response()->json([
