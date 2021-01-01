@@ -30,11 +30,9 @@
                             {{ $user->telpon }}
                         </td>
                         <td class="text-center" style="font-size: 1rem;">
-                            @if (Auth::user()->role == 4)
-                                <a href="" class="mr-2">
-                                    <i class="ni ni-credit-card"></i>
-                                </a>
-                            @endif
+                            <a href="{{ route('nasabah.info', $user->id) }}" class="mr-2">
+                                <i class="ni ni-credit-card"></i>
+                            </a>
                             <a href="#" data-target="#modalInfo{{ $user->telpon }}" data-toggle="modal" class="mr-2">
                                 <i class="ni ni-zoom-split-in"></i>
                             </a>
