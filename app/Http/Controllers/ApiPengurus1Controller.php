@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\PenjemputanResource;
 use App\JenisSampah;
 use App\Penjemputan;
+use App\Tabungan;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,6 @@ class ApiPengurus1Controller extends Controller
             'message' => 'data tersedia',
             'user' => $user,
         ], 200);
-
     }
 
     public function dataJemput()
@@ -54,7 +54,6 @@ class ApiPengurus1Controller extends Controller
             'message' => 'data tersedia',
             'user' => $user,
         ], 200);
-
     }
 
     public function harusJemput()
@@ -77,7 +76,6 @@ class ApiPengurus1Controller extends Controller
             'message' => 'data tersedia',
             'user' => $user,
         ], 200);
-
     }
 
     public function riwayatJemput()
@@ -100,7 +98,6 @@ class ApiPengurus1Controller extends Controller
             'message' => 'data tersedia',
             'user' => $user,
         ], 200);
-
     }
     public function detailDataJemput($id)
     {
@@ -108,7 +105,7 @@ class ApiPengurus1Controller extends Controller
         $user = PenjemputanResource::collection($data);
         $user = $user->sortByDesc('created_at');
         $user = $user->values()->all();
-        
+
         if (empty($user)) {
             return response()->json([
                 'status' => 'failed',
@@ -122,7 +119,6 @@ class ApiPengurus1Controller extends Controller
             'message' => 'data tersedia',
             'user' => $data,
         ], 200);
-
     }
 
     public function terimaJemput($id)
@@ -152,7 +148,6 @@ class ApiPengurus1Controller extends Controller
             'user' => $user,
             'pesan' => $pesan
         ], 200);
-
     }
 
     public function selesaiJemput($id)
@@ -174,7 +169,6 @@ class ApiPengurus1Controller extends Controller
             'message' => 'data tersedia',
             'user' => $user,
         ], 200);
-
     }
 
     public function tolakJemput($id)
@@ -204,14 +198,13 @@ class ApiPengurus1Controller extends Controller
             'user' => $user,
             'pesan' => $pesan,
         ], 200);
-
     }
 
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function daftarNasabah()
     {
 
@@ -224,13 +217,12 @@ class ApiPengurus1Controller extends Controller
                 'data' => null
             ], 400);
         }
- 
+
         return response()->json([
             'status' => 'success',
             'message' => 'data tersedia',
             'penjemput' => $penjemput
         ], 200);
- 
     }
 
     public function jenisSampah()
@@ -249,7 +241,6 @@ class ApiPengurus1Controller extends Controller
             'message' => 'data tersedia',
             'jenissampah' => $jenissampah,
         ], 200);
-
     }
 
     public function pencatatan(Request $request, $id)
@@ -260,7 +251,7 @@ class ApiPengurus1Controller extends Controller
             'berat' => 'required',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
@@ -270,6 +261,23 @@ class ApiPengurus1Controller extends Controller
             'berat' => $request->berat,
             'user_id' => $id,
         ]);
+
+        $sampah = JenisSampah::where('id', $request->jenis_sampah_id)->first();
+
+        if ($request->keterangan == 1) {
+            $ongkir = $sampah->harga_nasabah * 0.2;
+            $uang = Tabungan::create([
+                'user_id' => $id,
+                'debit' => ($ongkir + $sampah->harga_nasabah) * $request->berat,
+                'kredit' => 0,
+            ]);
+        } else {
+            $uang = Tabungan::create([
+                'user_id' => $id,
+                'debit' => $sampah->harga_nasabah * $request->berat,
+                'kredit' => 0,
+            ]);
+        };
 
         if (empty($catatan)) {
             return response()->json([
@@ -283,8 +291,7 @@ class ApiPengurus1Controller extends Controller
             'status' => 'success',
             'message' => 'data tersedia',
             'catatan' => $catatan,
+            'uang' => $uang,
         ], 200);
-
     }
-
 }

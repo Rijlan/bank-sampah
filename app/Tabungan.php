@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tabungan extends Model
 {
-    protected $fillable = ['user_id', 'catatan_id', 'debit', 'kredit'];
+    protected $fillable = ['user_id', 'debit', 'kredit'];
 
     public function user()
     {

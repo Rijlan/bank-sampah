@@ -123,12 +123,12 @@ class ApiNasabahController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function penjemputan()
+    public function penjemput()
     {
 
         $penjemput = User::where('role', 1)->get();
 
-        if ($penjemput->isEmpty()) {
+        if (empty($penjemput)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => "data tidak tersedia",
@@ -222,12 +222,12 @@ class ApiNasabahController extends Controller
     public function riwayatPenjemputan()
     {
 
-        $data = Penjemputan::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        $data = Penjemputan::where('user_id', Auth::id())->get();
         $penjemput = PenjemputanResource::collection($data);
         $penjemput = $penjemput->sortByDesc('created_at');
         $penjemput = $penjemput->values()->all();
         
-        if ($penjemput->isEmpty()) {
+        if (empty($penjemput)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => "data tidak tersedia",
@@ -239,6 +239,32 @@ class ApiNasabahController extends Controller
             'status' => 'success',
             'message' => 'data tersedia',
             'penjemput' => $penjemput
+        ], 200);
+ 
+    }
+
+       /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function detailRiwayatPenjemputan($id)
+    {
+
+        $data = Penjemputan::where('user_id', Auth::id())->where('id', $id)->first();
+        
+        if (empty($data)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => "data tidak tersedia",
+                'data' => null
+            ], 400);
+        }
+ 
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data tersedia',
+            'data' => $data
         ], 200);
  
     }
