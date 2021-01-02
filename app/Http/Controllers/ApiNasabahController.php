@@ -58,7 +58,7 @@ class ApiNasabahController extends Controller
        $debit = Tabungan::where('user_id', Auth::id())->sum('debit');
        $kredit = Tabungan::where('user_id', Auth::id())->sum('kredit');
        
-       if ($uang->isEmpty()) {
+       if (empty($uang)) {
            return response()->json([
                'status' => 'failed',
                'message' => "data tidak tersedia",
@@ -69,9 +69,9 @@ class ApiNasabahController extends Controller
        return response()->json([
            'status' => 'success',
            'message' => 'data tersedia',
-           'uang' => $uang,
            'debit' => $debit,
            'kredit' => $kredit,
+           'uang' => $uang,
        ], 200);
 
    }

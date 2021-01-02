@@ -17,7 +17,7 @@ class PenjemputanResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'nama' => $this->user->name,
+            'nama' => $this->nama,
             'alamat' => $this->alamat,
             'telpon' => $this->telpon,
             'foto_penjemput' => $this->penjemput->foto,
