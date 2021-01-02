@@ -90,6 +90,10 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="container py-4">
+            {{ $users->links() }}
+        </div>
     @endif
 </div>
 

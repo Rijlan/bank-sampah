@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // catatan
     Route::get('/catatan', 'CatatanController@index')->name('catatan.index');
+    Route::get('/catatan/total', 'CatatanController@total');
 
     // penjualan
     Route::get('/penjualan', 'PenjualanController@index')->name('penjualan.index');

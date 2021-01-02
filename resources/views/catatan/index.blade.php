@@ -126,6 +126,10 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="container py-4">
+            {{ $catatans->links() }}
+        </div>
     @endif
 </div>
 
