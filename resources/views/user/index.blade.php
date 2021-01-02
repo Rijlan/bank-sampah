@@ -112,6 +112,10 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="container py-4">
+            {{ $users->links() }}
+        </div>
     @endif
 </div>
 
@@ -201,7 +205,7 @@
                     <div class="form-group">
                         <label class="form-control-label" for="role">Role</label>
                         <select name="role" id="role" class="form-control" required>
-                            <option value="">-- Pilih Role --</option>
+                            <option value="" disabled selected>-- Pilih Role --</option>
                             <option value="1">Pengurus 1</option>
                             <option value="2">Pengurus 2</option>
                             <option value="3">Nasabah</option>

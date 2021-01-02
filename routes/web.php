@@ -28,12 +28,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user', 'UserController@index')->name('user.index');
     Route::delete('/user/{id}', 'UserController@destroy')->name('user.destroy');
     Route::post('/user', 'UserController@store')->name('user.store');
-    Route::get('/user/{id}', 'UserController@edit')->name('user.edit');
+    Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::patch('/user/{id}', 'UserController@update')->name('user.update');
     
     // nasabah
     Route::get('/nasabah', 'UserController@nasabahIndex')->name('nasabah.index');
-    Route::get('/nasabah/{id}', 'UserController@nasabahEdit')->name('nasabah.edit');
+    Route::get('/nasabah/{id}/edit', 'UserController@nasabahEdit')->name('nasabah.edit');
+    Route::get('/nasabah/info/{id}', 'TabunganController@nasabahInfo')->name('nasabah.info');
+    Route::post('/nasabah/tarik/{id}', 'TabunganController@nasabahTarik')->name('nasabah.tarik');
 
     // jenis sampah
     Route::get('/jenis-sampah', 'JenisSampahController@index')->name('jenis.index');
@@ -43,12 +45,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     // catatan
     Route::get('/catatan', 'CatatanController@index')->name('catatan.index');
-    // Route::delete('/catatan/{id}', 'CatatanController@destroy')->name('catatan.destroy');
+    Route::get('/catatan/total', 'CatatanController@total');
 
     // penjualan
     Route::get('/penjualan', 'PenjualanController@index')->name('penjualan.index');
-    // Route::delete('/penjualan/{id}', 'PenjualanController@destroy')->name('penjualan.destroy');
-    Route::post('/penjualan', 'PenjualanController@store')->name('penjualan.store');
 
     // keuangan
     Route::get('/keuangan', 'KeuanganController@index')->name('keuangan.index');

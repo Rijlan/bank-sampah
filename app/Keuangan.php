@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Keuangan extends Model
 {
-    //
+    protected $fillable = ['debit', 'kredit'];
 
     public function getCreatedAtAttribute()
     {

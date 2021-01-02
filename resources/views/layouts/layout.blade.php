@@ -297,6 +297,11 @@
     </script>
     <!-- Argon JS -->
     <script src="{{ asset('js/argon.js?v=1.2.0') }}"></script>
+    <script>
+        $(function() {
+            $('.pagination').addClass('justify-content-end mb-0');
+        });
+    </script>
 </body>
 
 </html>
