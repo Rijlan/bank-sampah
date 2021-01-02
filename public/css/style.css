@@ -31,3 +31,8 @@
         text-align: left;
     }
 }
+
+.info-tabungan h4, .info-tabungan h2, .info-tabungan p {
+    color: white;
+    font-weight: normal;
+}

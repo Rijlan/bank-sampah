@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tabungan;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,7 @@ class UserController extends Controller
     }
     
     public function index() {
-        $users = User::where('role', '!=', 3)->where('role', '!=', 5)->orderBy('role', 'DESC')->get();
+        $users = User::where('role', '!=', 3)->where('role', '!=', 5)->orderBy('role', 'DESC')->paginate(10);
         
         return view('user.index' , [
             'page' => $this->page,
@@ -149,7 +150,7 @@ class UserController extends Controller
 
     public function nasabahIndex()
     {
-        $users = User::where('role', 3)->get();
+        $users = User::where('role', 3)->paginate(10);
         
         return view('nasabah.index' , [
             'page' => ['active' => 'nasabah'],
