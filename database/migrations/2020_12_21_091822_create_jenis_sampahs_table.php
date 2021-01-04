@@ -16,6 +16,7 @@ class CreateJenisSampahsTable extends Migration
         Schema::create('jenis_sampahs', function (Blueprint $table) {
             $table->id();
             $table->string('jenis');
+            $table->string('foto');
             $table->integer('harga_nasabah');
             $table->integer('harga_pengepul');
             $table->timestamps();
