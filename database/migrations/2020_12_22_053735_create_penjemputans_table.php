@@ -17,6 +17,7 @@ class CreatePenjemputansTable extends Migration
             $table->id();
             $table->string('nama');
             $table->string('alamat');
+            $table->string('url_alamat');
             $table->string('telpon');
             $table->string('foto');
             $table->unsignedBigInteger('user_id');

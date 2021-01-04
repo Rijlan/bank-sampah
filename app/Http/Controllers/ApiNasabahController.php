@@ -157,8 +157,9 @@ class ApiNasabahController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
-            'telpon' => 'required',
             'alamat' => 'required',
+            'url_alamat' => 'required',
+            'telpon' => 'required',
             'foto' => 'required',
             'penjemput_id' => 'required',
         ]);
@@ -187,6 +188,7 @@ class ApiNasabahController extends Controller
         $penjemput = Penjemputan::create([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
+            'url_alamat' => $request->url_alamat,
             'telpon' => $request->telpon,
             'foto' => $foto,
             'status' => 1,
