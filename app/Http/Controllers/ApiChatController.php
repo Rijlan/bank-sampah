@@ -32,21 +32,20 @@ class ApiChatController extends Controller
     public function kontakPengurus1()
     {
         $from = DB::table('users')
-        ->join('messages', 'users.id', '=', 'messages.from')
-        ->where('users.id', '!=', Auth::id())
-        ->where('messages.to', '=', Auth::id())
-        ->select('users.id', 'users.name', 'users.foto')
-        ->distinct()->get()->toArray();
+            ->join('messages', 'users.id', '=', 'messages.from')
+            ->where('users.id', '!=', Auth::id())
+            ->where('messages.to', '=', Auth::id())
+            ->select('users.id', 'users.name', 'users.foto')
+            ->distinct()->get()->toArray();
 
         $to = DB::table('users')
-        ->join('messages', 'users.id', '=', 'messages.to')
-        ->where('users.id', '!=', Auth::id())
-        ->where('messages.from', '=', Auth::id())
-        ->select('users.id', 'users.name', 'users.foto')
-        ->distinct()->get()->toArray();
-        
-        $kontak = array_unique(array_merge($from, $to), SORT_REGULAR);
-;
+            ->join('messages', 'users.id', '=', 'messages.to')
+            ->where('users.id', '!=', Auth::id())
+            ->where('messages.from', '=', Auth::id())
+            ->select('users.id', 'users.name', 'users.foto')
+            ->distinct()->get()->toArray();
+
+        $kontak = array_unique(array_merge($from, $to), SORT_REGULAR);;
         if (empty($kontak)) {
             return response()->json([
                 'status' => 'failed',
@@ -78,6 +77,9 @@ class ApiChatController extends Controller
         })->orWhere(function ($query) use ($id) {
             $query->where('from', $id)->where('to', Auth::id());
         })->get();
+
+        // $pesan = null;
+
         // $message = Message::where(function ($quey) use ($user_id, $id) {
         //     $quey->where('from', $user_id)->where('to', $id);
         // })->orWhere(function ($quey) use ($user_id, $id) {
@@ -91,22 +93,21 @@ class ApiChatController extends Controller
                 'message' => 'data tidak tersedia',
                 'data' => null
             ]);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'data tersedia',
-                'data' => $pesan
-            ]);
         }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data tersedia',
+            'data' => $pesan
+        ]);
     }
 
     public function kirim(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'pesan' => 'required',
-            ]);
+        ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
@@ -123,12 +124,11 @@ class ApiChatController extends Controller
                 'message' => 'data tidak tersedia',
                 'data' => null
             ]);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'data tersedia',
-                'data' => $pesan
-            ]);
         }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data tersedia',
+            'data' => $pesan
+        ]);
     }
 }
