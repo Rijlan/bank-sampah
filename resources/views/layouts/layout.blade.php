@@ -37,47 +37,54 @@
                     <!-- Nav items -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'dashboard' ? 'active' : '' }}" href="{{ route('home') }}">
+                            <a class="nav-link {{ $page['active'] == 'dashboard' ? 'active' : '' }}"
+                                href="{{ route('home') }}">
                                 <i class="ni ni-tv-2 text-primary"></i>
                                 <span class="nav-link-text">Dashboard</span>
                             </a>
                         </li>
-                        @if (Auth::user()->role == 5)
-                        <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'user' ? 'active' : '' }}" href="{{ route('user.index') }}">
-                                <i class="ni ni-circle-08 text-orange"></i>
-                                <span class="nav-link-text">User</span>
-                            </a>
-                        </li>
+                        @if(Auth::user()->role == 5)
+                            <li class="nav-item">
+                                <a class="nav-link {{ $page['active'] == 'user' ? 'active' : '' }}"
+                                    href="{{ route('user.index') }}">
+                                    <i class="ni ni-circle-08 text-orange"></i>
+                                    <span class="nav-link-text">User</span>
+                                </a>
+                            </li>
                         @endif
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'nasabah' ? 'active' : '' }}" href="{{ route('nasabah.index') }}">
+                            <a class="nav-link {{ $page['active'] == 'nasabah' ? 'active' : '' }}"
+                                href="{{ route('nasabah.index') }}">
                                 <i class="ni ni-single-02 text-green"></i>
                                 <span class="nav-link-text">Nasabah</span>
                             </a>
                         </li>
-                        @if (Auth::user()->role == 5)
-                        <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'jenis sampah' ? 'active' : '' }}" href="{{ route('jenis.index') }}">
-                                <i class="ni ni-bullet-list-67 text-primary"></i>
-                                <span class="nav-link-text">Jenis Sampah</span>
-                            </a>
-                        </li>
+                        @if(Auth::user()->role == 5)
+                            <li class="nav-item">
+                                <a class="nav-link {{ $page['active'] == 'jenis sampah' ? 'active' : '' }}"
+                                    href="{{ route('jenis.index') }}">
+                                    <i class="ni ni-bullet-list-67 text-primary"></i>
+                                    <span class="nav-link-text">Jenis Sampah</span>
+                                </a>
+                            </li>
                         @endif
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'catatan' ? 'active' : '' }}" href="{{ route('catatan.index') }}">
+                            <a class="nav-link {{ $page['active'] == 'catatan' ? 'active' : '' }}"
+                                href="{{ route('catatan.index') }}">
                                 <i class="ni ni-basket text-yellow"></i>
                                 <span class="nav-link-text">Catatan</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'penjualan' ? 'active' : '' }}" href="{{ route('penjualan.index') }}">
+                            <a class="nav-link {{ $page['active'] == 'penjualan' ? 'active' : '' }}"
+                                href="{{ route('penjualan.index') }}">
                                 <i class="ni ni-send text-default"></i>
                                 <span class="nav-link-text">Penjualan</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $page['active'] == 'keuangan' ? 'active' : '' }}" href="{{ route('keuangan.index') }}">
+                            <a class="nav-link {{ $page['active'] == 'keuangan' ? 'active' : '' }}"
+                                href="{{ route('keuangan.index') }}">
                                 <i class="ni ni-money-coins text-info"></i>
                                 <span class="nav-link-text">Keuangan</span>
                             </a>
@@ -224,7 +231,8 @@
                                         <img alt="Image placeholder" src="{{ Auth::user()->foto }}">
                                     </span>
                                     <div class="media-body  ml-2  d-none d-lg-block">
-                                        <span class="mb-0 text-sm  font-weight-bold">{{ ucwords(Auth::user()->name) }}</span>
+                                        <span
+                                            class="mb-0 text-sm  font-weight-bold">{{ ucwords(Auth::user()->name) }}</span>
                                     </div>
                                 </div>
                             </a>
@@ -241,11 +249,13 @@
                                     <span>Settings</span>
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a href="{{ route('logout') }}" class="dropdown-item"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="ni ni-user-run"></i>
                                     <span>{{ __('Logout') }}</span>
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
                                     @csrf
                                 </form>
                             </div>
@@ -263,8 +273,10 @@
                         <div class="col-lg-6 col-7">
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">{{ ucwords($page['active']) }}</li>
+                                    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i
+                                                class="fas fa-home"></i></a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        {{ ucwords($page['active']) }}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -295,13 +307,19 @@
     <script src="{{ asset('vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}">
     </script>
+    <!-- Optional JS -->
+    <script src="{{ asset('vendor/chart.js/dist/Chart.min.js') }}"></script>
+    <script src="{{ asset('vendor/chart.js/dist/Chart.extension.js') }}"></script>
     <!-- Argon JS -->
     <script src="{{ asset('js/argon.js?v=1.2.0') }}"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
     <script>
-        $(function() {
+        $(function () {
             $('.pagination').addClass('justify-content-end mb-0');
         });
+
     </script>
+    @yield('script')
 </body>
 
 </html>

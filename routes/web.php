@@ -21,6 +21,7 @@ Route::get('/', 'HomeController@index')->middleware('auth');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home/tersedia', 'HomeController@tersedia')->name('home.tersedia');
     Route::get('/profile', 'HomeController@profile')->name('admin.profile');
     Route::patch('/profile/change', 'HomeController@change')->name('admin.change');
 

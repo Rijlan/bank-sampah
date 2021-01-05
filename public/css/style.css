@@ -1,3 +1,7 @@
+* {
+    scroll-behavior: smooth;
+}
+
 .message {
     position: fixed;
     top: 10px;
@@ -35,4 +39,37 @@
 .info-tabungan h4, .info-tabungan h2, .info-tabungan p {
     color: white;
     font-weight: normal;
+}
+
+.leaderboard ol {
+    list-style: none;
+    padding-left: 0;
+}
+
+.leaderboard small {
+    float: right;
+}
+
+.leaderboard-header {
+    background-color: blue;
+}
+
+.leaderboard-header h3 {
+    color: white;
+}
+
+.leaderboard-body {
+    border: 1px solid darkgrey;
+}
+
+.leaderboard-list li {
+    transition: 0.2s;
+    background-color: white;
+    overflow: hidden;
+}
+
+.leaderboard-list li:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
