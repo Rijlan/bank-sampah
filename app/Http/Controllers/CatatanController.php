@@ -18,10 +18,14 @@ class CatatanController extends Controller
     public function index()
     {
         $catatans = Catatan::paginate(10);
+        $totals = DB::select(
+            DB::raw("SELECT jenis_sampahs.jenis, SUM(berat) AS berat FROM catatans LEFT JOIN jenis_sampahs ON catatans.jenis_sampah_id = jenis_sampahs.id GROUP BY jenis_sampahs.jenis")
+        );
 
         return view('catatan.index', [
             'page' => $this->page,
-            'catatans' => $catatans
+            'catatans' => $catatans,
+            'totals' => $totals
         ]);
     }
 
