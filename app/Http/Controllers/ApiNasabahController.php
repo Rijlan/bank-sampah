@@ -230,7 +230,7 @@ class ApiNasabahController extends Controller
 
         $data = Penjemputan::where('user_id', Auth::id())->get();
         $penjemput = PenjemputanResource::collection($data);
-        $penjemput = $penjemput->sortByDesc('created_at');
+        $penjemput = $penjemput->sortBy('status');
         $penjemput = $penjemput->values()->all();
         
         if (empty($penjemput)) {

@@ -150,7 +150,7 @@ class ApiPengurus1Controller extends Controller
         ], 200);
     }
 
-    public function selesaiJemput($id)
+    public function tolakJemput($id)
     {
         $user = Penjemputan::where('id', $id)->where('status', '!=', 2)->first();
         $user->status = 3;
@@ -171,7 +171,7 @@ class ApiPengurus1Controller extends Controller
         ], 200);
     }
 
-    public function tolakJemput($id)
+    public function selesaiJemput($id)
     {
         $user = Penjemputan::where('id', $id)->first();
         $user->status = 4;

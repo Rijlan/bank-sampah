@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ApiChatController extends Controller
 {
@@ -63,11 +64,26 @@ class ApiChatController extends Controller
 
     public function pesan($id)
     {
+        // $user_id = Auth::id();
+
+        // $user_id = Auth::id();
+        // $pesan = Chat::where(function ($query) use ($id, $user_id) {
+        //     $query->where('from', $user_id)->where('to', $id);
+        // })->orWhere(function ($query) use ($id, $user_id) {
+        //     $query->where('from', $id)->where('to', $user_id);
+        // })->get();
+
         $pesan = Chat::where(function ($query) use ($id) {
             $query->where('from', Auth::id())->where('to', $id);
         })->orWhere(function ($query) use ($id) {
             $query->where('from', $id)->where('to', Auth::id());
         })->get();
+        // $message = Message::where(function ($quey) use ($user_id, $id) {
+        //     $quey->where('from', $user_id)->where('to', $id);
+        // })->orWhere(function ($quey) use ($user_id, $id) {
+        //     $quey->where('from', $id)->where('to', $user_id);
+        // })->get();
+
 
         if (empty($pesan)) {
             return response()->json([
@@ -86,6 +102,14 @@ class ApiChatController extends Controller
 
     public function kirim(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'pesan' => 'required',
+            ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
         $pesan = Chat::create([
             'from' => Auth::id(),
             'to' => $id,
