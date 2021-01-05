@@ -1,7 +1,29 @@
 @extends('layouts.layout')
 
 @section('content')
-<h2 style="border-bottom: 4px solid;" class="py-2">Catatan</h2>
+<h2 style="border-bottom: 4px solid;" class="py-2">
+    Catatan
+    <span class="float-right">
+        <a href="#" data-target="#modalTotal" data-toggle="modal" class="btn btn-sm btn-primary"><i class="ni ni-chart-pie-35" style="font-size: 1rem;"></i></a>
+    </span>
+</h2>
+
+<div class="modal fade" id="modalTotal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="text-center">Info Catatan</h2>
+                <hr class="my-2">
+                <div class="chart">
+                    <div class="chart-canvas" id="chart-total-catatan"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- Tabel --}}
 <div class="table-responsive">
