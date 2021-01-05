@@ -15,16 +15,19 @@ class JenisBarangSeeder extends Seeder
         $jenis = [
             [
                 'jenis' => 'kertas',
+                'foto' => 'https://iili.io/K88RSI.png',
                 'harga_nasabah' => 1000,
                 'harga_pengepul' => 1400
             ],
             [
                 'jenis' => 'plastik',
+                'foto' => 'https://iili.io/K88IPR.png',
                 'harga_nasabah' => 5000,
                 'harga_pengepul' => 7000
             ],
             [
-                'jenis' => 'logam',
+                'jenis' => 'besi',
+                'foto' => 'https://iili.io/K88AcN.png',
                 'harga_nasabah' => 6000,
                 'harga_pengepul' => 8000
             ]

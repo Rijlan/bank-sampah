@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Penjemputan extends Model
 {
-    protected $fillable = ['status', 'nama', 'alamat', 'telpon', 'user_id', 'penjemput_id'];
+    protected $fillable = ['status', 'nama', 'alamat', 'url_alamat','telpon', 'foto','user_id', 'penjemput_id'];
 
     public function getCreatedAtAttribute()
     {
