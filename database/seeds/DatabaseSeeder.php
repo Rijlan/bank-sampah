@@ -11,10 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UserSeeder::class);
-        $this->call(JenisBarangSeeder::class);
-        $this->call(CatatanSeeder::class);
+        // $this->call(UserSeeder::class);
+        // $this->call(JenisBarangSeeder::class);
+        // $this->call(CatatanSeeder::class);
         $this->call(PenjemputanSeeder::class);
-        $this->call(TabunganSeeder::class);
+        // $this->call(TabunganSeeder::class);
     }
 }
