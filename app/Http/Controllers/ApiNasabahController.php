@@ -28,7 +28,7 @@ class ApiNasabahController extends Controller
         $debit = Tabungan::where('user_id', Auth::id())->sum('debit');
         $kredit = Tabungan::where('user_id', Auth::id())->sum('kredit');
         $duit = $debit-$kredit;
-        $uang = number_format("$duit", 2, ",", ".");
+        $uang = number_format("$duit", 0, ",", ".");
 
         if (empty($user)) {
             return response()->json([

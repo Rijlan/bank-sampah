@@ -12,7 +12,14 @@ class Tabungan extends Model
     public function getDebitAttribute()
     {
         // return $this->attributes['debit'] = sprintf(number_format($debit, 2));
-        return number_format($this->attributes['debit'], 2, ',', '.');
+        return number_format($this->attributes['debit'], 0, ',', '.');
+    
+    }
+
+    public function getKreditAttribute()
+    {
+        // return $this->attributes['kredit'] = sprintf(number_format($kredit, 2));
+        return number_format($this->attributes['kredit'], 0, ',', '.');
     
     }
 
