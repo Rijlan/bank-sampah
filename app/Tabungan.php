@@ -9,6 +9,13 @@ class Tabungan extends Model
 {
     protected $fillable = ['user_id', 'debit', 'kredit'];
 
+    public function getDebitAttribute()
+    {
+        // return $this->attributes['debit'] = sprintf(number_format($debit, 2));
+        return number_format($this->attributes['debit'], 2, ',', '.');
+    
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -26,12 +33,12 @@ class Tabungan extends Model
     public function getCreatedAtAttribute()
     {
         return Carbon::parse($this->attributes['created_at'])
-           ->format('d-M-Y');
+            ->format('d-M-Y');
     }
-    
+
     public function getUpdatedAtAttribute()
     {
         return Carbon::parse($this->attributes['updated_at'])
-           ->diffForHumans();
+            ->diffForHumans();
     }
 }
