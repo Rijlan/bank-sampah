@@ -17,9 +17,41 @@
                 </button>
                 <h2 class="text-center">Info Catatan</h2>
                 <hr class="my-2">
-                <div class="chart">
-                    <div class="chart-canvas" id="chart-total-catatan"></div>
+                <div class="row mt-4 py-3">
+                    <div class="col-lg-8">
+                        <div class="chart">
+                            <canvas class="chart-canvas" id="chart-total-catatan"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-2">
+                        <h2 class="text-center text-muted">Keterangan</h2>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="sort">Jenis</th>
+                                        <th class="sort">Berat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($totals as $total)
+                                    <tr>
+                                        <td>{{ $total->jenis }}</td>
+                                        <td>{{ $total->berat }} Kg</td>
+                                    </tr>
+                                    @endforeach
+                                    <tr class="font-weight-bold">
+                                        <td>Total :</td>
+                                        <td>{{ $grand_total }} Kg</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -67,13 +99,6 @@
                             <a href="#" data-target="#modalInfo{{ $catatan->id }}" data-toggle="modal" class="mr-2">
                                 <i class="ni ni-zoom-split-in"></i>
                             </a>
-                            {{-- <a href="#" onclick="event.preventDefault(); document.getElementById('delete-catatan-{{ $catatan->id }}').submit();">
-                                <i class="ni ni-button-power"></i>
-                            </a>
-                            <form action="{{ route('catatan.destroy', $catatan->id) }}" method="POSt" class="d-none" id="delete-catatan-{{ $catatan->id }}">
-                                @csrf
-                                @method('delete')
-                            </form> --}}
                         </td>
                     </tr>
 
@@ -180,4 +205,32 @@
         </div>
     </div>
 @endif
+@endsection
+
+@section('script')
+    <script>
+        var data = @json($totals);
+        var Jenis = new Array();
+        var Berat = new Array();
+        
+        data.forEach(data => {
+            Jenis.push(data.jenis);
+            Berat.push(data.berat);
+        });
+
+        var $chartTotal = $('#chart-total-catatan');
+        var totalChart = new Chart($chartTotal, {
+            type: 'pie',
+            data: {
+                labels: Jenis,
+                datasets: [{
+                    label: 'Total',
+                    data: Berat,
+                    borderWidth: 1,
+                    backgroundColor: ['#5e72e4', '#99FF33', '#FF6600', '#FFFF33', '#9E9E9E', '#BBDEFB'],
+                }]
+            }
+        });
+            
+    </script>
 @endsection

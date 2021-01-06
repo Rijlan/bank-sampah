@@ -22,10 +22,13 @@ class CatatanController extends Controller
             DB::raw("SELECT jenis_sampahs.jenis, SUM(berat) AS berat FROM catatans LEFT JOIN jenis_sampahs ON catatans.jenis_sampah_id = jenis_sampahs.id GROUP BY jenis_sampahs.jenis")
         );
 
+        $grand_total = Catatan::sum('berat');
+
         return view('catatan.index', [
             'page' => $this->page,
             'catatans' => $catatans,
-            'totals' => $totals
+            'totals' => $totals,
+            'grand_total' => $grand_total
         ]);
     }
 
