@@ -55,8 +55,10 @@ class ApiNasabahController extends Controller
    public function riwayatUang()
    {
        $uang = Tabungan::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->get();
-
-       if ($uang->isEmpty()) {
+       $debit = Tabungan::where('user_id', Auth::id())->sum('debit');
+       $kredit = Tabungan::where('user_id', Auth::id())->sum('kredit');
+       
+       if (empty($uang)) {
            return response()->json([
                'status' => 'failed',
                'message' => "data tidak tersedia",
@@ -67,7 +69,9 @@ class ApiNasabahController extends Controller
        return response()->json([
            'status' => 'success',
            'message' => 'data tersedia',
-           'uang' => $uang
+           'debit' => $debit,
+           'kredit' => $kredit,
+           'uang' => $uang,
        ], 200);
 
    }
@@ -153,8 +157,9 @@ class ApiNasabahController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
-            'telpon' => 'required',
             'alamat' => 'required',
+            'url_alamat' => 'required',
+            'telpon' => 'required',
             'foto' => 'required',
             'penjemput_id' => 'required',
         ]);
@@ -183,6 +188,7 @@ class ApiNasabahController extends Controller
         $penjemput = Penjemputan::create([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
+            'url_alamat' => $request->url_alamat,
             'telpon' => $request->telpon,
             'foto' => $foto,
             'status' => 1,
