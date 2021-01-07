@@ -19,6 +19,7 @@ class CreateCatatansTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->integer('keterangan');
             $table->double('berat');
+            $table->integer('harga');
             $table->timestamps();
         });
     }

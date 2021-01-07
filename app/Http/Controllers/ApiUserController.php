@@ -97,10 +97,84 @@ class ApiUserController extends Controller
         return response()->json(compact('user'));
     }
 
+    public function ubahProfil(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+
+        $foto = null;
+
+        if ($request->foto) {
+            $img = base64_encode(file_get_contents($request->foto));
+            $client = new Client();
+            $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $img,
+                    'format' => 'json',
+                ]
+            ]);
+            $array = json_decode($res->getBody()->getContents());
+            $foto = $array->image->file->resource->chain->image;
+        }
+
+
+        $user = User::find(Auth::id())->update([
+            'name' => $request->name,
+            'alamat' => $request->alamat,
+            'foto' => $foto,
+        ]);
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'data berhasil diupdate',
+                    'data' => $user,
+                ]);
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'data gagal diupdate',
+                    'data' => null,
+                ]);
+    }
+
+    public function ubahTelpon(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'telpon' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $user = User::find(Auth::id())->update([
+            'telpon' => $request->telpon
+        ]);
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'data berhasil diupdate',
+                    'data' => $user,
+                ]);
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'data gagal diupdate',
+                    'data' => null,
+                ]);
+    }
+
     public function ubahPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'old_password' => 'required|string|max:255',
+            'password_lama' => 'required|string|max:255',
             'password' => 'required|string|max:255|min:6|confirmed'
         ]);
 
@@ -110,7 +184,7 @@ class ApiUserController extends Controller
 
         $user = User::find(Auth::id());
 
-        if (Hash::check($request->old_password, $user->password)) {
+        if (Hash::check($request->password_lama, $user->password)) {
             $user->password = Hash::make($request->password);
 
             try {

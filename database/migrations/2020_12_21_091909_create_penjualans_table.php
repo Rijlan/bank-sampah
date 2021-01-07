@@ -20,6 +20,7 @@ class CreatePenjualansTable extends Migration
             $table->string('telpon');
             $table->unsignedBigInteger('jenis_sampah_id');
             $table->double('berat');
+            $table->integer('harga');
             $table->timestamps();
         });
     }
