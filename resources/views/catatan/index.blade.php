@@ -148,6 +148,11 @@
                                                         <span>Harga Satuan</span>
                                                         <br>
                                                         <span class="text-muted">Rp. {{ number_format($catatan->jenisSampah->harga_nasabah) }}</span>
+                                                        <span class="text-danger">
+                                                            @if ($catatan->jenisSampah->created_at != $catatan->jenisSampah->updated_at)
+                                                                Harga mungkin sudah diubah
+                                                            @endif
+                                                        </span>
                                                     </li>
                                                     <li class="font-weight-bold list-group-item non-bordered">
                                                         <span>Berat</span>

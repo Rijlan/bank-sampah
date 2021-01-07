@@ -1,7 +1,61 @@
 @extends('layouts.layout')
 
 @section('content')
-<h2 style="border-bottom: 4px solid;" class="py-2">Penjualan</h2>
+<h2 style="border-bottom: 4px solid;" class="py-2">
+    Penjualan
+    <span class="float-right">
+        <a href="#" data-target="#modalTotal" data-toggle="modal" class="btn btn-sm btn-primary"><i class="ni ni-chart-pie-35" style="font-size: 1rem;"></i></a>
+    </span>
+</h2>
+
+<div class="modal fade" id="modalTotal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="text-center">Info Penjualan</h2>
+                <hr class="my-2">
+                <div class="row mt-4 py-3">
+                    <div class="col-lg-8">
+                        <div class="chart">
+                            <canvas class="chart-canvas" id="chart-total-catatan"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-2">
+                        <h2 class="text-center text-muted">Keterangan</h2>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="sort">Jenis</th>
+                                        <th class="sort">Berat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($totals as $total)
+                                    <tr>
+                                        <td>{{ $total->jenis }}</td>
+                                        <td>{{ $total->berat }} Kg</td>
+                                    </tr>
+                                    @endforeach
+                                    <tr class="font-weight-bold">
+                                        <td>Total :</td>
+                                        <td>{{ $grand_total }} Kg</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- Tabel --}}
 <div class="table-responsive">
@@ -154,4 +208,32 @@
         </div>
     </div>
 @endif
+@endsection
+
+@section('script')
+    <script>
+        var data = @json($totals);
+        var Jenis = new Array();
+        var Berat = new Array();
+        
+        data.forEach(data => {
+            Jenis.push(data.jenis);
+            Berat.push(data.berat);
+        });
+
+        var $chartJual = $('#chart-total-catatan');
+        var totalChart = new Chart($chartJual, {
+            type: 'pie',
+            data: {
+                labels: Jenis,
+                datasets: [{
+                    label: 'Total',
+                    data: Berat,
+                    borderWidth: 1,
+                    backgroundColor: ['#5e72e4', '#99FF33', '#FF6600', '#FFFF33', '#9E9E9E', '#BBDEFB'],
+                }]
+            }
+        });
+            
+    </script>
 @endsection
