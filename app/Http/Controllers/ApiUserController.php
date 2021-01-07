@@ -97,7 +97,7 @@ class ApiUserController extends Controller
         return response()->json(compact('user'));
     }
 
-    public function ubahProfil(Request $request)
+    public function editProfil(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -145,7 +145,7 @@ class ApiUserController extends Controller
                 ]);
     }
 
-    public function ubahTelpon(Request $request)
+    public function editTelpon(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'telpon' => 'required'
@@ -171,7 +171,7 @@ class ApiUserController extends Controller
                 ]);
     }
 
-    public function ubahPassword(Request $request)
+    public function editPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'password_lama' => 'required|string|max:255',
