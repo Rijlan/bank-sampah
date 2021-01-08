@@ -41,11 +41,33 @@ class JenisSampahController extends Controller
             'jenis' => 'required|string|max:255',
             'harga_nasabah' => 'required|integer',
             'harga_pengepul' => 'required|integer',
+            'foto' => 'mimes:jpeg,bmp,png,gif,jpg'
         ]);
 
         $jenis_sampah->jenis = $request->jenis;
         $jenis_sampah->harga_nasabah = $request->harga_nasabah;
         $jenis_sampah->harga_pengepul = $request->harga_pengepul;
+
+        if ($request->hasFile('foto')) {
+            $image = $request->file('foto');
+            $file = base64_encode(file_get_contents($image));
+
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $file,
+                    'format' => 'json'
+                ]
+            ]);
+
+            $data = $response->getBody()->getContents();
+            $data = json_decode($data);
+            $image = $data->image->url;
+
+            $jenis_sampah->foto = $image;
+        }
 
         try {
             $jenis_sampah->save();
@@ -66,8 +88,29 @@ class JenisSampahController extends Controller
             'harga_pengepul' => 'required|integer',
         ]);
 
-        $data = $request->all();
+        $data = $request->except(['foto']);
         $result = array_filter($data);
+
+        if ($request->hasFile('foto')) {
+            $image = $request->file('foto');
+            $file = base64_encode(file_get_contents($image));
+
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $file,
+                    'format' => 'json'
+                ]
+            ]);
+
+            $data = $response->getBody()->getContents();
+            $data = json_decode($data);
+            $image = $data->image->url;
+
+            $jenis_sampah->foto = $image;
+        }
 
         try {
             $jenis_sampah->update($result);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\JenisSampah;
 use App\Penjualan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PenjualanController extends Controller
 {
@@ -20,10 +21,16 @@ class PenjualanController extends Controller
         $penjualans = Penjualan::all();
         $jenis_sampahs = JenisSampah::all();
 
+        $totals = DB::select(DB::raw("SELECT jenis_sampahs.jenis, SUM(berat) AS berat FROM penjualans LEFT JOIN jenis_sampahs ON penjualans.jenis_sampah_id = jenis_sampahs.id GROUP BY jenis_sampahs.jenis"));
+
+        $grand_total = Penjualan::sum('berat');
+
         return view('penjualan.index', [
             'page' => $this->page,
             'penjualans' => $penjualans,
-            'jenis_sampahs' => $jenis_sampahs
+            'jenis_sampahs' => $jenis_sampahs,
+            'totals' => $totals,
+            'grand_total' => $grand_total
         ]);
     }
 

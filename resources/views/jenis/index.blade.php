@@ -25,7 +25,7 @@
                             {{ $key+1 }}
                         </td>
                         <td>
-                            {{ $jenis_sampah->jenis }}
+                            <img src="{{ $jenis_sampah->foto }}" width="20px" class="mr-2">{{ $jenis_sampah->jenis }}
                         </td>
                         <td>
                             Rp. {{ number_format($jenis_sampah->harga_nasabah) }}
@@ -54,8 +54,11 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    <h2>Tambah Jenis Sampah</h2>
+                                    <h2>Update Jenis Sampah</h2>
                                     <hr class="my-4">
+                                    <div class="text-center">
+                                        <img src="{{ $jenis_sampah->foto }}" width="100px" class="mb-3" />
+                                    </div>
                                     <form action="{{ route('jenis.update', $jenis_sampah->id) }}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         @method('patch')
@@ -76,6 +79,9 @@
                                                     <input type="number" name="harga_pengepul" id="harga_pengepul" class="form-control" placeholder="Harga untuk Pengepul" value="{{ $jenis_sampah->harga_pengepul }}" required />
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="file" class="form-control" name="foto" id="foto" />
                                         </div>
                     
                                         <button class="btn btn-success" type="submit" name="simpan" id="simpan">Save</button>
@@ -153,6 +159,9 @@
                                 <input type="number" name="harga_pengepul" id="harga_pengepul" class="form-control" placeholder="Harga untuk Pengepul" required />
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" class="form-control" name="foto" id="foto" />
                     </div>
 
                     <button class="btn btn-success" type="submit" name="simpan" id="simpan">Save</button>
