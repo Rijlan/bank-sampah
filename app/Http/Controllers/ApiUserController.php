@@ -133,22 +133,24 @@ class ApiUserController extends Controller
             'foto' => $foto,
         ]);
 
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'data berhasil diupdate',
-                    'data' => $user,
-                ]);
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => 'data gagal diupdate',
-                    'data' => null,
-                ]);
+        if (empty($user)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'data gagal diupdate',
+                'data' => null,
+            ]);
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data berhasil diupdate',
+            'data' => $user,
+        ]);
     }
 
     public function editTelpon(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'telpon' => 'required'
+            'telpon' => 'required|unique:users',
         ]);
 
         if ($validator->fails()) {
@@ -159,16 +161,18 @@ class ApiUserController extends Controller
             'telpon' => $request->telpon
         ]);
 
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'data berhasil diupdate',
-                    'data' => $user,
-                ]);
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => 'data gagal diupdate',
-                    'data' => null,
-                ]);
+        if (empty($user)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'data gagal diupdate',
+                'data' => null,
+            ]);
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data berhasil diupdate',
+            'data' => $user,
+        ]);
     }
 
     public function editPassword(Request $request)
@@ -202,7 +206,7 @@ class ApiUserController extends Controller
                     'data' => null,
                 ]);
             }
-        }else{
+        } else {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'password lama yang anda masukkan salah',
