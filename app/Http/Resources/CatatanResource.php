@@ -20,7 +20,7 @@ class CatatanResource extends JsonResource
             'id' => $this->id,
             'foto_sampah' => $this->jenisSampah->foto,
             'jenis_sampah' => $this->jenisSampah->jenis,
-            'harga_sampah' => $this->jenisSampah->harga_nasabah,
+            'harga_sampah' => $this->total,
             'keterangan' => $this->keterangan,
             'berat' => $this->berat,
             'user_id' => $this->user_id,

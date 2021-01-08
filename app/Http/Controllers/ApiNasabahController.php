@@ -28,7 +28,7 @@ class ApiNasabahController extends Controller
         $debit = Tabungan::where('user_id', Auth::id())->sum('debit');
         $kredit = Tabungan::where('user_id', Auth::id())->sum('kredit');
         $duit = $debit-$kredit;
-        $uang = $duit;
+        $uang = number_format("$duit", 0, ",", ".");
 
         if (empty($user)) {
             return response()->json([
@@ -230,7 +230,7 @@ class ApiNasabahController extends Controller
 
         $data = Penjemputan::where('user_id', Auth::id())->get();
         $penjemput = PenjemputanResource::collection($data);
-        $penjemput = $penjemput->sortByDesc('created_at');
+        $penjemput = $penjemput->sortBy('status');
         $penjemput = $penjemput->values()->all();
         
         if (empty($penjemput)) {

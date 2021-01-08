@@ -4,8 +4,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
@@ -18,7 +20,7 @@ class ApiUserController extends Controller
         $credentials = $request->only('email', 'password');
 
         try {
-            if (! $token = JWTAuth::attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 400);
             }
         } catch (JWTException $e) {
@@ -38,7 +40,7 @@ class ApiUserController extends Controller
             'alamat' => 'required|string|max:255',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
@@ -71,32 +73,142 @@ class ApiUserController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user','token'),201);
+        return response()->json(compact('user', 'token'), 201);
     }
 
     public function getAuthenticatedUser()
     {
         try {
 
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
             }
-
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
 
             return response()->json(['token_expired'], $e->getStatusCode());
-
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
 
             return response()->json(['token_invalid'], $e->getStatusCode());
-
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
 
             return response()->json(['token_absent'], $e->getStatusCode());
-
         }
 
         return response()->json(compact('user'));
+    }
+
+    public function editProfil(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+
+        $foto = null;
+
+        if ($request->foto) {
+            $img = base64_encode(file_get_contents($request->foto));
+            $client = new Client();
+            $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $img,
+                    'format' => 'json',
+                ]
+            ]);
+            $array = json_decode($res->getBody()->getContents());
+            $foto = $array->image->file->resource->chain->image;
+        }
+
+
+        $user = User::find(Auth::id())->update([
+            'name' => $request->name,
+            'alamat' => $request->alamat,
+            'foto' => $foto,
+        ]);
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'data berhasil diupdate',
+                    'data' => $user,
+                ]);
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'data gagal diupdate',
+                    'data' => null,
+                ]);
+    }
+
+    public function editTelpon(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'telpon' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $user = User::find(Auth::id())->update([
+            'telpon' => $request->telpon
+        ]);
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'data berhasil diupdate',
+                    'data' => $user,
+                ]);
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'data gagal diupdate',
+                    'data' => null,
+                ]);
+    }
+
+    public function editPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password_lama' => 'required|string|max:255',
+            'password' => 'required|string|max:255|min:6|confirmed'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $user = User::find(Auth::id());
+
+        if (Hash::check($request->password_lama, $user->password)) {
+            $user->password = Hash::make($request->password);
+
+            try {
+                $user->save();
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'data berhasil diupdate',
+                    'data' => $user,
+                ]);
+            } catch (Exception $e) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'data gagal diupdate',
+                    'data' => null,
+                ]);
+            }
+        }else{
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'password lama yang anda masukkan salah',
+                'data' => null,
+            ]);
+        }
     }
 }
 

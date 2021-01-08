@@ -20,7 +20,7 @@ class TabunganSeeder extends Seeder
             ],
             [
                 'user_id' => 7,                
-                'debit' => 3000,
+                'debit' => 4800,
                 'kredit' => 0,
             ],
             [
@@ -32,6 +32,16 @@ class TabunganSeeder extends Seeder
                 'user_id' => 7,                
                 'debit' => 12000,
                 'kredit' => 0,
+            ],
+            [
+                'user_id' => 7,                
+                'debit' => 4000,
+                'kredit' => 0,
+            ],
+            [
+                'user_id' => 7,                
+                'debit' => 0,
+                'kredit' => 7000,
             ]
         ];
 

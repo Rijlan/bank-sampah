@@ -16,8 +16,8 @@ class JenisBarangSeeder extends Seeder
             [
                 'jenis' => 'kertas',
                 'foto' => 'https://iili.io/K88RSI.png',
-                'harga_nasabah' => 1000,
-                'harga_pengepul' => 1400
+                'harga_nasabah' => 2000,
+                'harga_pengepul' => 2400
             ],
             [
                 'jenis' => 'plastik',

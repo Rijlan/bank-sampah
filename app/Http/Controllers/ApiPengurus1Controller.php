@@ -17,9 +17,9 @@ class ApiPengurus1Controller extends Controller
 {
     public function index()
     {
-        $user = User::where('id', Auth::id())->get();
+        $user = User::where('id', Auth::id())->first();
 
-        if ($user->isEmpty()) {
+        if (empty($user)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => "data tidak tersedia",
@@ -36,7 +36,7 @@ class ApiPengurus1Controller extends Controller
 
     public function dataJemput()
     {
-        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '=', 1)->get();
+        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '==', 1)->get();
         $user = PenjemputanResource::collection($data);
         $user = $user->sortByDesc('created_at');
         $user = $user->values()->all();
@@ -58,7 +58,7 @@ class ApiPengurus1Controller extends Controller
 
     public function harusJemput()
     {
-        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '=', 2)->get();
+        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '==', 2)->get();
         $user = PenjemputanResource::collection($data);
         $user = $user->sortByDesc('created_at');
         $user = $user->values()->all();
@@ -80,7 +80,7 @@ class ApiPengurus1Controller extends Controller
 
     public function riwayatJemput()
     {
-        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '=', 3)->get();
+        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '==', 4)->get();
         $user = PenjemputanResource::collection($data);
         $user = $user->sortByDesc('created_at');
         $user = $user->values()->all();
@@ -123,7 +123,7 @@ class ApiPengurus1Controller extends Controller
 
     public function terimaJemput($id)
     {
-        $user = Penjemputan::where('id', $id)->where('status', '!=', 1)->first();
+        $user = Penjemputan::where('id', $id)->first();
         $user->status = 2;
         $user->update();
 
@@ -150,31 +150,11 @@ class ApiPengurus1Controller extends Controller
         ], 200);
     }
 
-    public function selesaiJemput($id)
-    {
-        $user = Penjemputan::where('id', $id)->where('status', '!=', 2)->first();
-        $user->status = 3;
-        $user->update();
-
-        if (empty($user)) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => "data tidak tersedia",
-                'data' => null
-            ], 400);
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'data tersedia',
-            'user' => $user,
-        ], 200);
-    }
 
     public function tolakJemput($id)
     {
         $user = Penjemputan::where('id', $id)->first();
-        $user->status = 4;
+        $user->status = 3;
         $user->update();
 
         $pesan = Chat::create([
@@ -197,6 +177,27 @@ class ApiPengurus1Controller extends Controller
             'message' => 'data tersedia',
             'user' => $user,
             'pesan' => $pesan,
+        ], 200);
+    }
+
+    public function selelsaiJemput($id)
+    {
+        $user = Penjemputan::where('id', $id)->first();
+        $user->status = 4;
+        $user->update();
+
+        if (empty($user)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => "data tidak tersedia",
+                'data' => null
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data tersedia',
+            'user' => $user,
         ], 200);
     }
 
@@ -255,29 +256,32 @@ class ApiPengurus1Controller extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-        $catatan = Catatan::create([
-            'jenis_sampah_id' => $request->jenis_sampah_id,
-            'keterangan' => $request->keterangan,
-            'berat' => $request->berat,
-            'user_id' => $id,
-        ]);
-
         $sampah = JenisSampah::where('id', $request->jenis_sampah_id)->first();
 
         if ($request->keterangan == 1) {
             $ongkir = $sampah->harga_nasabah * 0.2;
-            $uang = Tabungan::create([
+            $catatan = Catatan::create([
+                'jenis_sampah_id' => $request->jenis_sampah_id,
+                'keterangan' => $request->keterangan,
+                'berat' => $request->berat,
+                'total' => ($sampah->harga_nasabah - $ongkir) * $request->berat,
                 'user_id' => $id,
-                'debit' => ($ongkir + $sampah->harga_nasabah) * $request->berat,
-                'kredit' => 0,
             ]);
         } else {
-            $uang = Tabungan::create([
+            $catatan = Catatan::create([
+                'jenis_sampah_id' => $request->jenis_sampah_id,
+                'keterangan' => $request->keterangan,
+                'berat' => $request->berat,
+                'total' => $request->harga_nasabah * $request->berat,
                 'user_id' => $id,
-                'debit' => $sampah->harga_nasabah * $request->berat,
-                'kredit' => 0,
             ]);
         };
+
+        $uang = Tabungan::create([
+            'user_id' => $id,
+            'debit' => $catatan->total,
+            'kredit' => 0,
+        ]);
 
         if (empty($catatan)) {
             return response()->json([

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Catatan extends Model
 {
-    protected $fillable = ['jenis_sampah_id', 'keterangan', 'user_id', 'berat'];
+    protected $fillable = ['jenis_sampah_id', 'keterangan', 'user_id', 'berat', 'total'];
 
     public function user()
     {
