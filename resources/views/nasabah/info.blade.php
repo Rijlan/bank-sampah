@@ -92,14 +92,14 @@
                             @if ($tabungan->debit == 0)
                                 -
                             @else
-                                Rp. {{ number_format($tabungan->debit) }}
+                                Rp. {{ $tabungan->debit }}
                             @endif
                         </td>
                         <td>
                             @if ($tabungan->kredit == 0)
                                 -
                             @else
-                                Rp. {{ number_format($tabungan->kredit) }}
+                                Rp. {{ $tabungan->kredit }}
                             @endif
                         </td>
                     </tr>

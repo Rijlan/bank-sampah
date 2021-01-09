@@ -71,7 +71,7 @@ class CatatanController extends Controller
         }
 
         // 5 peringkat
-        $peringkat = DB::select(DB::raw("SELECT users.name, SUM(berat) AS total_berat, SUM(jenis_sampahs.harga_nasabah * berat) AS total_harga FROM users LEFT JOIN catatans ON users.id = catatans.user_id LEFT JOIN jenis_sampahs ON catatans.jenis_sampah_id = jenis_sampahs.id WHERE users.role = 3 GROUP BY users.name ORDER BY total_harga DESC LIMIT 5"));
+        $peringkat = DB::select(DB::raw("SELECT users.name, SUM(berat) AS total_berat, SUM(catatans.total) AS total_harga FROM users LEFT JOIN catatans ON users.id = catatans.user_id LEFT JOIN jenis_sampahs ON catatans.jenis_sampah_id = jenis_sampahs.id WHERE users.role = 3 GROUP BY users.name ORDER BY total_harga DESC LIMIT 5"));
 
         dd($total, $sudah, $belum, $peringkat);
     }

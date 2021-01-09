@@ -52,4 +52,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     // keuangan
     Route::get('/keuangan', 'KeuanganController@index')->name('keuangan.index');
+    Route::post('/keuangan', 'KeuanganController@store')->name('keuangan.store');
 });
