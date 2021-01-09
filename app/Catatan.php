@@ -24,6 +24,13 @@ class Catatan extends Model
         return $this->hasMany(Tabungan::class);
     }
 
+    public function getTotalAttribute()
+    {
+        // return $this->attributes['kredit'] = sprintf(number_format($kredit, 2));
+        return number_format($this->attributes['total'], 0, ',', '.');
+    
+    }
+
     public function getCreatedAtAttribute()
     {
         return Carbon::parse($this->attributes['created_at'])
