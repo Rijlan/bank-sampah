@@ -93,7 +93,7 @@
                             {{ $penjualan->berat }} Kg
                         </td>
                         <td>
-                            Rp. {{ number_format($penjualan->jenisSampah->harga_pengepul * $penjualan->berat) }}
+                            Rp. {{ number_format($penjualan->total) }}
                         </td>
                         <td class="text-center" style="font-size: 1rem;">
                             <a href="#" data-target="#modalInfo{{ $penjualan->id }}" data-toggle="modal" class="mr-2">
@@ -154,7 +154,13 @@
                                                     <li class="font-weight-bold list-group-item non-bordered">
                                                         <span>Harga Satuan</span>
                                                         <br>
-                                                        <span class="text-muted">Rp. {{ number_format($penjualan->jenisSampah->harga_pengepul) }}</span>
+                                                        @if($penjualan->jenisSampah->harga_pengepul * $penjualan->berat == $penjualan->total)
+                                                            <span class="text-muted">Rp. {{ number_format($penjualan->jenisSampah->harga_pengepul) }}</span>
+                                                        @else
+                                                            <span class="text-danger">
+                                                                Rp. {{ number_format($penjualan->total / $penjualan->berat) }}
+                                                            </span>
+                                                        @endif
                                                     </li>
                                                     <li class="font-weight-bold list-group-item non-bordered">
                                                         <span>Berat</span>
@@ -164,7 +170,7 @@
                                                     <li class="font-weight-bold list-group-item non-bordered">
                                                         <span>Total Harga</span>
                                                         <br>
-                                                        <span class="text-muted">Rp. {{ number_format($penjualan->jenisSampah->harga_pengepul * $penjualan->berat) }}</span>
+                                                        <span class="text-muted">Rp. {{ number_format($penjualan->total) }}</span>
                                                     </li>
                                                 </ul>
                                             </div>
