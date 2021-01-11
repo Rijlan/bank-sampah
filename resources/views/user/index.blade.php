@@ -8,13 +8,20 @@
     @if ($users->isEmpty())
         <h1 class="text-center">Data Kosong</h1>
     @else
-        <table class="table align-items-center table-flush">
+        <table class="table align-items-center table-flush" id="UserTable">
             <thead class="thead-light">
                 <tr>
                     <th scope="col" class="sort">Name</th>
                     <th scope="col" class="sort">Email</th>
                     <th scope="col" class="sort">Phone</th>
-                    <th scope="col" class="sort">Role</th>
+                    <th scope="col" class="sort">
+                        <select class="form-control search" id="selectSearch">
+                            <option value="">Role</option>
+                            <option value="Pengurus1">Pengurus 1</option>
+                            <option value="Pengurus2">Pengurus 2</option>
+                            <option value="Bendahara">Bendahara</option>
+                        </select>
+                    </th>
                     <th scope="col" class="sort text-center">Action</th>
                 </tr>
             </thead>
@@ -225,4 +232,28 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#UserTable').DataTable({
+                'paging' : false,
+                'info' : false,
+                "columnDefs": [
+                    { "orderable": false, "targets": [3, 4] }
+                ]
+            });
+
+            $('#UserTable_filter').hide();
+            var table = $('#UserTable').DataTable();
+            $('.search').on('keyup change', function() {
+                table.search(this.value).draw();
+            });
+
+            $('.search').on('keyup', function() {
+                $('#selectSearch').val('');
+            });
+        });
+    </script>
 @endsection
