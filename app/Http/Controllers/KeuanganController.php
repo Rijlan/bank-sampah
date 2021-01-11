@@ -29,4 +29,22 @@ class KeuanganController extends Controller
             'total' => $total
         ]);
     }
+
+    public function store(Request $request, Keuangan $keuangan)
+    {
+        $request->validate([
+            'debit' => 'required|integer',
+        ]);
+
+        $keuangan->debit = $request->debit;
+        $keuangan->keterangan = 0;
+
+        try {
+            $keuangan->save();
+            
+            return redirect()->back()->with('message', 'Saldo Berhasil Ditambahkan');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors($th->getMessage());
+        }
+    }
 }

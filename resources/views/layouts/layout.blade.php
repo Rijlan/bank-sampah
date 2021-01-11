@@ -109,7 +109,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                                 </div>
-                                <input class="form-control" placeholder="Search" type="text">
+                                <input class="form-control search" id="search" placeholder="Search" type="text" {{ ($page['active'] == 'user' ? '' : ($page['active'] == 'nasabah' ? '' : 'disabled')) }}>
                             </div>
                         </div>
                         <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main"
@@ -307,9 +307,12 @@
     <script src="{{ asset('vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}">
     </script>
+    <script src="{{ asset('vendor/jquery.form/dist/jquery.form.js') }}"></script>
     <!-- Optional JS -->
     <script src="{{ asset('vendor/chart.js/dist/Chart.min.js') }}"></script>
     <script src="{{ asset('vendor/chart.js/dist/Chart.extension.js') }}"></script>
+    <script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <!-- Argon JS -->
     <script src="{{ asset('js/argon.js?v=1.2.0') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
