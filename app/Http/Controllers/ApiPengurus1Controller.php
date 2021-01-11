@@ -36,7 +36,7 @@ class ApiPengurus1Controller extends Controller
 
     public function dataJemput()
     {
-        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '==', 1)->get();
+        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '=', 1)->get();
         $user = PenjemputanResource::collection($data);
         $user = $user->sortByDesc('created_at');
         $user = $user->values()->all();
@@ -58,7 +58,7 @@ class ApiPengurus1Controller extends Controller
 
     public function harusJemput()
     {
-        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '==', 2)->get();
+        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '=', 2)->get();
         $user = PenjemputanResource::collection($data);
         $user = $user->sortByDesc('created_at');
         $user = $user->values()->all();
@@ -80,7 +80,7 @@ class ApiPengurus1Controller extends Controller
 
     public function riwayatJemput()
     {
-        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '==', 4)->get();
+        $data = Penjemputan::where('penjemput_id', Auth::id())->where('status', '=', 4)->get();
         $user = PenjemputanResource::collection($data);
         $user = $user->sortByDesc('created_at');
         $user = $user->values()->all();
@@ -123,24 +123,15 @@ class ApiPengurus1Controller extends Controller
 
     public function terimaJemput($id)
     {
-        $user = Penjemputan::where('id', $id)->first();
-        $user->status = 2;
-        $user->update();
+        $user = Penjemputan::where('id', $id)->firstOrFail();
+        $user->update(['status' => 2]);
 
         $pesan = Chat::create([
             'from' => Auth::id(),
             'to' => $user->user_id,
             'status' => 1,
-            'pesan' => 'iya pak, kami bersedia melakulan penjemputan ke alamat yang telah bapak kirim, mohon ditunggu ya pak',
+            'pesan' => 'Baik, Penjemputan Akan Segera kami Lakukan',
         ]);
-
-        if (empty($user)) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => "data tidak tersedia",
-                'data' => null
-            ], 400);
-        }
 
         return response()->json([
             'status' => 'success',
@@ -161,7 +152,7 @@ class ApiPengurus1Controller extends Controller
             'from' => Auth::id(),
             'to' => $user->user_id,
             'status' => 1,
-            'pesan' => 'maaf pak, kami belum bersedia melakulan penjemputan ke alamat yang telah bapak kirim karena beberapa alasan, mohon maaf atas keterbasan kami',
+            'pesan' => 'Maaf, Pemintaan Anda Tidak Bisa Kami Lakukan',
         ]);
 
         if (empty($user)) {
@@ -211,7 +202,7 @@ class ApiPengurus1Controller extends Controller
 
         $penjemput = User::where('role', 3)->get();
 
-        if ($penjemput->isEmpty()) {
+        if (empty($penjemput)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => "data tidak tersedia",
@@ -223,6 +214,26 @@ class ApiPengurus1Controller extends Controller
             'status' => 'success',
             'message' => 'data tersedia',
             'penjemput' => $penjemput
+        ], 200);
+    }
+
+    public function cariNasabah($user)
+    {
+
+        $user = User::where('email', $user)->first();
+
+        if (empty($user)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => "data tidak tersedia",
+                'data' => null
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data tersedia',
+            'user' => $user,
         ], 200);
     }
 

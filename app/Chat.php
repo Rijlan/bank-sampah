@@ -12,7 +12,7 @@ class Chat extends Model
     public function getCreatedAtAttribute()
     {
         return Carbon::parse($this->attributes['created_at'])
-           ->format('d-M-Y');
+           ->format('H:i');
     }
     
     public function getUpdatedAtAttribute()

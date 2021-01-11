@@ -111,10 +111,11 @@ class ApiChatController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
+        $form = $validator->validated();
         $pesan = Chat::create([
             'from' => Auth::id(),
             'to' => $id,
-            'pesan' => $request->pesan,
+            'pesan' => $form['pesan'],
             'status' => 0
         ]);
 
