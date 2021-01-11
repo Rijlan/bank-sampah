@@ -8,7 +8,7 @@
     @if ($users->isEmpty())
         <h1 class="text-center">Data Kosong</h1>
     @else
-        <table class="table align-items-center table-flush">
+        <table class="table align-items-center table-flush" id="NasabahTable">
             <thead class="thead-light">
                 <tr>
                     <th scope="col" class="sort">Name</th>
@@ -197,4 +197,24 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#NasabahTable').DataTable({
+                'paging' : false,
+                'info' : false,
+                "columnDefs": [
+                    { "orderable": false, "targets": 3 }
+                ]
+            });
+
+            $('#NasabahTable_filter').hide();
+            var table = $('#NasabahTable').DataTable();
+            $('#search').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+        });
+    </script>
 @endsection
