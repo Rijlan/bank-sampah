@@ -102,9 +102,7 @@ class ApiPengurus1Controller extends Controller
     public function detailDataJemput($id)
     {
         $data = Penjemputan::where('penjemput_id', Auth::id())->where('id', $id)->first();
-        $user = PenjemputanResource::collection($data);
-        $user = $user->sortByDesc('created_at');
-        $user = $user->values()->all();
+
 
         if (empty($user)) {
             return response()->json([
@@ -117,7 +115,7 @@ class ApiPengurus1Controller extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'data tersedia',
-            'user' => $data,
+            'data' => $data,
         ], 200);
     }
 
