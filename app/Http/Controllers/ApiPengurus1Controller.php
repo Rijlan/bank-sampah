@@ -103,8 +103,7 @@ class ApiPengurus1Controller extends Controller
     {
         $data = Penjemputan::where('penjemput_id', Auth::id())->where('id', $id)->first();
 
-
-        if (empty($user)) {
+        if (empty($data)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => "data tidak tersedia",
