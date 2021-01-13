@@ -43,4 +43,9 @@ class Catatan extends Model
            ->diffForHumans();
     }
 
+    public function getTotalHargaAttribute()
+    {
+        return $this->attributes['total'];
+    }
+
 }

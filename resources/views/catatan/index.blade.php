@@ -90,7 +90,7 @@
                             {{ $catatan->berat }} Kg
                         </td>
                         <td>
-                            Rp. {{ number_format($catatan->total) }}
+                            Rp. {{ number_format($catatan->total_harga) }}
                         </td>
                         <td>
                             {{ $catatan->user->name }}
@@ -148,19 +148,19 @@
                                                         <span>Harga Satuan</span>
                                                         <br>
                                                         @if ($catatan->keterangan == 1)
-                                                            @if (($catatan->jenisSampah->harga_nasabah - $catatan->jenisSampah->harga_nasabah * 0.2) * $catatan->berat == $catatan->total)
+                                                            @if (($catatan->jenisSampah->harga_nasabah - $catatan->jenisSampah->harga_nasabah * 0.2) * $catatan->berat == $catatan->total_harga)
                                                                 <span class="text-muted">Rp. {{ number_format($catatan->jenisSampah->harga_nasabah) }}</span>
                                                             @else
                                                                 <span class="text-danger">
-                                                                    Rp. {{ number_format($catatan->total / $catatan->berat + ($catatan->jenisSampah->harga_nasabah * 0.2)) }}
+                                                                    Rp. {{ number_format($catatan->total_harga / $catatan->berat + ($catatan->jenisSampah->harga_nasabah * 0.2)) }}
                                                                 </span>
                                                             @endif
                                                         @else
-                                                            @if($catatan->jenisSampah->harga_nasabah * $catatan->berat == $catatan->total)
+                                                            @if($catatan->jenisSampah->harga_nasabah * $catatan->berat == $catatan->total_harga)
                                                                 <span class="text-muted">Rp. {{ number_format($catatan->jenisSampah->harga_nasabah) }}</span>
                                                             @else
                                                             <span class="text-danger">
-                                                                Rp. {{ number_format($catatan->total / $catatan->berat) }}
+                                                                Rp. {{ number_format($catatan->total_harga / $catatan->berat) }}
                                                             </span>
                                                             @endif
                                                         @endif
@@ -173,7 +173,7 @@
                                                     <li class="font-weight-bold list-group-item non-bordered">
                                                         <span>Total Harga</span>
                                                         <br>
-                                                        <span class="text-muted">Rp. {{ number_format($catatan->total) }}</span>
+                                                        <span class="text-muted">Rp. {{ number_format($catatan->total_harga) }}</span>
                                                     </li>
                                                 </ul>
                                             </div>
