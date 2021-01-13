@@ -25,4 +25,9 @@ class Penjualan extends Model
     {
         return $this->belongsTo(JenisSampah::class);
     }
+
+    public function getTotalHargaAttribute()
+    {
+        return $this->attributes['total'];
+    }
 }
