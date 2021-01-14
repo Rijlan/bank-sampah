@@ -48,4 +48,14 @@ class Tabungan extends Model
         return Carbon::parse($this->attributes['updated_at'])
             ->diffForHumans();
     }
+
+    public function getDebitRawAttribute()
+    {
+        return $this->attributes['debit'];
+    }
+
+    public function getKreditRawAttribute()
+    {
+        return $this->attributes['kredit'];
+    }
 }
