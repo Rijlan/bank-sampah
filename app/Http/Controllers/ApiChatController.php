@@ -71,6 +71,7 @@ class ApiChatController extends Controller
         // })->orWhere(function ($query) use ($id, $user_id) {
         //     $query->where('from', $id)->where('to', $user_id);
         // })->get();
+        Chat::where('from', $id)->where('to', Auth::id())->update(['status' => 2]);
 
         $pesan = Chat::where(function ($query) use ($id) {
             $query->where('from', Auth::id())->where('to', $id);
@@ -116,7 +117,7 @@ class ApiChatController extends Controller
             'from' => Auth::id(),
             'to' => $id,
             'pesan' => $form['pesan'],
-            'status' => 0
+            'status' => 1
         ]);
 
         if (empty($pesan)) {

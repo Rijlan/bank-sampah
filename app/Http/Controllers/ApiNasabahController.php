@@ -11,6 +11,7 @@ use App\JenisSampah;
 use App\Penjemputan;
 use App\Tabungan;
 use App\User;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -168,18 +169,21 @@ class ApiNasabahController extends Controller
         $foto = null;
 
         if ($request->foto) {
-            $img = base64_encode(file_get_contents($request->foto));
-            $client = new Client();
-            $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
-                'form_params' => [
-                    'key' => '6d207e02198a847aa98d0a2a901485a5',
-                    'action' => 'upload',
-                    'source' => $img,
-                    'format' => 'json',
-                ]
-            ]);
-            $array = json_decode($res->getBody()->getContents());
-            $foto = $array->image->file->resource->chain->image;
+
+            $foto = Cloudinary::upload($request->file('foto')->getRealPath())->getSecurePath();
+
+            // $img = base64_encode(file_get_contents($request->foto));
+            // $client = new Client();
+            // $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+            //     'form_params' => [
+            //         'key' => '6d207e02198a847aa98d0a2a901485a5',
+            //         'action' => 'upload',
+            //         'source' => $img,
+            //         'format' => 'json',
+            //     ]
+            // ]);
+            // $array = json_decode($res->getBody()->getContents());
+            // $foto = $array->image->file->resource->chain->image;
         }
 
         $penjemput = Penjemputan::create([
