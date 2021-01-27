@@ -68,7 +68,7 @@ return [
     */
 
     'timezone' => 'Asia/Jakarta',
-
+    
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -80,7 +80,8 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'id',
+    // 'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +107,8 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'id_ID',
+    // 'faker_locale' => 'en_US',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,22 +163,23 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        
         /*
-         * Package Service Providers...
-         */
-
+        * Package Service Providers...
+        */
+        
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-
+        
         /*
-         * Application Service Providers...
-         */
+        * Application Service Providers...
+        */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        
+        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
     ],
 
     /*
@@ -230,7 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class, 
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-
+        'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
 
     ],
 
