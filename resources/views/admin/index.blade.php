@@ -122,14 +122,17 @@
                 </div>
                 <div class="leaderboard-body">
                     <ol class="leaderboard-list mb-0">
-                        @foreach($peringkat as $key => $peringkat)
+                        @php
+                        $i = 1;
+                        @endphp
+                        @foreach($peringkat as $key => $peringkat)                        
                         @if ($peringkat->total_berat == 0 || $peringkat->total_harga == 0)
                             @php
                             continue;
                             @endphp
                         @endif
                             <li class="d-flex bd-highlight p-2">
-                                <p class="bd-highlight mr-2 m-0 font-weight-bold">{{ $key+1 }}.</p>
+                                <p class="bd-highlight mr-2 m-0 font-weight-bold">{{ $i++ }}.</p>
                                 <p class="bd-highlight mb-0">{{ ucwords($peringkat->name) }}</p>
                                 <small class="ml-auto bd-highlight">Rp. {{ number_format($peringkat->total_harga) }}
                                     ({{ $peringkat->total_berat }} Kg)</small>
